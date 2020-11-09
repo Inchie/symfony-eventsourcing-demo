@@ -1,0 +1,4 @@
+app_lucky_number:
+    path: /main
+    controller: App\Controller\MainController::number
+
