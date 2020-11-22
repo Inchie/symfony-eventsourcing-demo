@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Domain\Context\Commenting;
 
-
 use App\Domain\Context\Commenting\Command\CreateComment;
 use App\Domain\Context\Commenting\Event\CommentWasCreated;
-use Neos\EventSourcing\Event\DomainEventInterface;
+use App\Domain\Context\Commenting\Store\CommentingEventStore;
 use Neos\EventSourcing\Event\DomainEvents;
 use Neos\EventSourcing\EventStore\EventStore;
 use Neos\EventSourcing\EventStore\StreamName;
@@ -20,11 +20,11 @@ class CommentingCommandHandler
 
     /**
      * CommentingCommandHandler constructor.
-     * @param EventStore $eventStore
+     * @param CommentingEventStore $eventStore
      */
-    public function __construct(EventStore $eventStore)
+    public function __construct(CommentingEventStore $eventStore)
     {
-        $this->eventStore = $eventStore;
+        $this->eventStore = $eventStore->create();
 
         // TODO: also inject finders from projections which you want :)
     }
@@ -45,7 +45,7 @@ class CommentingCommandHandler
         ));
     }
 
-    private function requireUserToExist(string $getAuthorIdentifier)
+    private function requireUserToExist($getAuthorIdentifier)
     {
         // read a model, throw exception if it does not exist.
         // This would be a soft constraint check.
@@ -53,6 +53,4 @@ class CommentingCommandHandler
         // or, build up an Aggregate and ask it; this would be a hard constraint check.
         // If in doubt, use soft constraints :)
     }
-
-
 }

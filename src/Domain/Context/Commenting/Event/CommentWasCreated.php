@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Domain\Context\Commenting\Event;
-
 
 use App\Domain\ValueObject\UserIdentifier;
 use Neos\EventSourcing\Event\DomainEventInterface;

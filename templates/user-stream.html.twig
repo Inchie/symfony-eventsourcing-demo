@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="row pt-3">
+                <div class="col-lg-5">
+                    <h2>List of users</h2>
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Stream</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.name|e }}</td>
+                                <td>{{ user.stream|e }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="col-lg-7">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Stream: {{ streamName }}</h4>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Datum</th>
+                                    <th scope="col">Event</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for event in stream %}
+                                    <tr>
+                                        <td>
+                                            {{ event.rawEvent.recordedAt|date("d-m-Y") }}
+                                        </td>
+                                        <td>
+                                            {{ event.rawEvent.type|e }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

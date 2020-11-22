@@ -1,0 +1,6 @@
+neos_eventsourcing:
+  stores:
+    blog:
+      eventTableName: blog_events
+    user:
+      eventTableName: user_events

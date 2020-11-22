@@ -6,11 +6,7 @@ namespace App\Command;
 
 use App\Domain\Context\Commenting\Command\CreateComment;
 use App\Domain\Context\Commenting\CommentingCommandHandler;
-use App\Domain\Context\Commenting\Event\CommentWasCreated;
 use App\Domain\ValueObject\UserIdentifier;
-use Neos\EventSourcing\Event\DomainEvents;
-use Neos\EventSourcing\EventStore\EventStore;
-use Neos\EventSourcing\EventStore\StreamName;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -36,7 +32,6 @@ class SayHelloCommand extends Command
         $this->commentingCommandHandler = $commentingCommandHandler;
         parent::__construct();
     }
-
 
     protected function configure()
     {

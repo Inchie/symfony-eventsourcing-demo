@@ -8,9 +8,6 @@ use App\Domain\Context\Commenting\Event\CommentWasCreated;
 use Doctrine\DBAL\Connection;
 use Neos\EventSourcing\EventStore\RawEvent;
 use Neos\EventSourcing\Projection\ProjectorInterface;
-use Prooph\Common\Messaging\Command;
-use Prooph\Common\Messaging\PayloadConstructable;
-use Prooph\Common\Messaging\PayloadTrait;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CommentListProjector implements ProjectorInterface, EventSubscriberInterface

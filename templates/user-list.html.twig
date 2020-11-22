@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="row pt-3">
+                <div class="col-lg-7">
+                    <h2>List of users</h2>
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">E-Mail</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.name|e }}</td>
+                                <td>{{ user.mail|e }}</td>
+                                <td>
+                                    <a href="{{ path('user-edit', { 'stream': user.stream }) }}" class="btn btn-outline-warning btn-sm">
+                                        <i class="fa fa-edit"></i> Edit
+                                    </a>
+                                    <a href="{{ path('user-stream', { 'stream': user.stream }) }}" class="btn btn-outline-dark btn-sm">
+                                        <i class="fa fa-stream"></i> Stream
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="col-lg-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="{{ path('user-create') }}" class="form-horizontal"  method="POST">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="string" name="form[name]" required="required" class="form-control" />
+                                    <small id="nameHelp" class="form-text text-muted">We'll never share your employee with anyone else.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mail</label>
+                                    <input type="mail" name="form[mail]" required="required" class="form-control" />
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-plus"></i> Create User
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

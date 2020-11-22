@@ -11,6 +11,14 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+
+    #Neos\EventSourcing\EventStore\EventStore:
+    #    alias: neos_eventsourcing.eventstore.blog
+
+    #App\Domain\Context\User\UserCommandHandler:
+    #    arguments:
+    #        $eventStore: '@neos_eventsourcing.eventstore.user'
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -28,3 +36,8 @@ services:
 
     App\Domain\Projection\CommentList\CommentListProjector:
         public: true
+
+    App\Domain\Projection\UserList\UserListProjector:
+        public: true
+
+    App\Domain\Context\User\Repository\UserRepository: '@App\Domain\Context\User\Infrastructure\DoctrineUserRepository'

@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Domain\Context\Commenting\Command;
-
 
 use App\Domain\ValueObject\UserIdentifier;
 
@@ -19,7 +19,6 @@ class CreateComment
     private $comment;
 
     /**
-     * CommentWasCreated constructor.
      * @param UserIdentifier $authorIdentifier
      * @param string $comment
      */
