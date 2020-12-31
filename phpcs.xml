@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd"
+         name="Vmt">
+
+    <rule ref="PSR12">
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.NewlineBeforeOpenBrace"/>
+    </rule>
+
+    <config name="installed_paths" value="vendor/slevomat/coding-standard"/>
+
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/TypeHints/DeclareStrictTypesSniff.php">
+        <properties>
+            <property name="spacesCountAroundEqualsSign" value="0" />
+            <property name="newlinesCountBetweenOpenTagAndDeclare" value="2" />
+        </properties>
+        <exclude-pattern>./config/bundles.php</exclude-pattern>
+        <exclude-pattern>./config/bootstrap.php</exclude-pattern>
+        <exclude-pattern>./public/index.php</exclude-pattern>
+    </rule>
+
+    <arg name="basepath" value="."/>
+    <arg name="cache" value="./var/build/phpcs-cache"/>
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+    <arg value="p"/>
+
+    <arg name="error-severity" value="1"/>
+    <arg name="warning-severity" value="1"/>
+
+    <ini name="memory_limit" value="64M"/>
+</ruleset>

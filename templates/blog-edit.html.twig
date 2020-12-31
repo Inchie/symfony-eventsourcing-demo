@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="row mt-3">
+        <div class="col-md-12 mt-3">
+            <h2>List of blogs</h2>
+        </div>
+        <div class="col-md-12">
+            <div class="row pt-3">
+                <div class="col-lg-7">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Blog-Name</th>
+                            <th scope="col">Author</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for blog in blogs %}
+                            <tr>
+                                <td>{{ blog.name|e }}</td>
+                                <td>{{ blog.author|e }}</td>
+                                <td>
+                                    <a href="{{ path('blog-edit', { 'stream': blog.stream }) }}" class="btn btn-outline-warning btn-sm">
+                                        <i class="fa fa-edit"></i> Edit
+                                    </a>
+                                    <a href="{{ path('blog-show', { 'stream': blog.stream }) }}" class="btn btn-outline-warning btn-sm">
+                                        <i class="fa fa-eye"></i> Show
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="{{ path('blog-update') }}" class="form-horizontal"  method="POST">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="string" value="{{ currentBlog.name|e }}" name="form[name]" required="required" class="form-control" />
+                                    <small id="nameHelp" class="form-text text-muted">We'll never share your employee with anyone else.</small>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <input type="hidden" name="form[stream]" value="{{ currentBlog.stream|e }}" />
+                                    <i class="fa fa-plus"></i> Update Blog
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

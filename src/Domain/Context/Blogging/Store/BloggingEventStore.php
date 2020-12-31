@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Context\Commenting\Store;
+namespace App\Domain\Context\Blogging\Store;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class CommentingEventStore
+class BloggingEventStore
 {
     private $eventStore;
 

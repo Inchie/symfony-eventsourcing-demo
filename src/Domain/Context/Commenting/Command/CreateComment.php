@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\Commenting\Command;
 
+use App\Domain\ValueObject\BlogIdentifier;
 use App\Domain\ValueObject\UserIdentifier;
 
 class CreateComment
 {
+    /**
+     * @var BlogIdentifier
+     */
+    private $blogIdentifier;
+
     /**
      * @var UserIdentifier
      */
@@ -22,10 +28,19 @@ class CreateComment
      * @param UserIdentifier $authorIdentifier
      * @param string $comment
      */
-    public function __construct(UserIdentifier $authorIdentifier, string $comment)
-    {
+    public function __construct(
+        BlogIdentifier $blogIdentifier,
+        UserIdentifier $authorIdentifier,
+        string $comment
+    ) {
+        $this->blogIdentifier = $blogIdentifier;
         $this->authorIdentifier = $authorIdentifier;
         $this->comment = $comment;
+    }
+
+    public function getBlogIdentifier(): BlogIdentifier
+    {
+        return $this->blogIdentifier;
     }
 
     /**

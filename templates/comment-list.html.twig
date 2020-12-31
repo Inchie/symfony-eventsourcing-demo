@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="row mt-3">
+        <div class="col-md-12 mt-3">
+            <h2>List of comments</h2>
+        </div>
+        <div class="col-md-12">
+            <div class="row pt-3">
+                <div class="col-lg-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Blog-Name</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Comment</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for blog in blogs %}
+                            {% for comment in blog.comments %}
+                                <tr>
+                                    <td class="align-middle">{{ blog.name|e }}</td>
+                                    <td class="align-middle">{{ comment.author|e }}</td>
+                                    <td class="align-middle">{{ comment.comment|e }}</td>
+                                    <td>
+                                        <a href="{{ path('blog-edit', { 'stream': blog.stream }) }}" class="btn btn-outline-warning btn-sm">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </a>
+                                        <a href="{{ path('blog-show', { 'stream': blog.stream }) }}" class="btn btn-outline-warning btn-sm">
+                                            <i class="fa fa-eye"></i> Show
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-5">
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

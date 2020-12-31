@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Context\User;
 
 use App\Domain\Context\User\Command\CreateUser;

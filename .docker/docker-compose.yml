@@ -1,0 +1,49 @@
+version: '3.5'
+
+services:
+  app:
+    build: 
+      context: './images/development/base'
+      args:
+        apacheconfig: symfony-apache-config.conf
+    container_name: eventsourcing-app
+    volumes:
+      - ${LOCAL_PATH}:/var/www/eventsourcing.app
+    ports:
+      - 80:80
+    
+  mysql:    
+    build: './images/development/mysql'
+    container_name: eventsourcing-mysql
+    volumes:
+      - ./data/mysql/conf.d:/etc/mysql/conf.d
+      - ./data/mysql/mysql-datadir:/var/lib/mysql
+      - ./data/mysql/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    expose:
+      - "3000"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: eventsourcing-phpmyadmin
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: 'password'
+    volumes:
+      - /sessions
+    ports:
+      - 8080:80
+
+  #composer:
+  #  restart: 'no'
+  #  image: composer
+  #  working_dir: /var/www/eventsourcing.app
+  #  command: install
+  #  depends_on:
+  #    - app
+  #    - mysql
+  #  volumes:
+  #    - ${LOCAL_PATH}:/var/www/eventsourcing.app

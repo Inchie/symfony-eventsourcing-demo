@@ -17,6 +17,12 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
+            Blog:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Domain/Context/Blogging/Model'
+                prefix: 'App\Domain\Context\Blogging\Model'
+                alias: Blog
             User:
                 is_bundle: false
                 type: annotation

@@ -41,7 +41,8 @@ class SayHelloCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->commentingCommandHandler->handleCreateComment(new CreateComment(
-            UserIdentifier::fromString("meinAuthor"), "Mein Comment"
+            UserIdentifier::fromString("meinAuthor"),
+            "Mein Comment"
         ));
 
         return Command::SUCCESS;

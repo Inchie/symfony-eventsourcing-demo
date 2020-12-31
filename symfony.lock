@@ -5,6 +5,9 @@
     "composer/package-versions-deprecated": {
         "version": "1.11.99"
     },
+    "dealerdirect/phpcodesniffer-composer-installer": {
+        "version": "v0.7.1"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -81,6 +84,18 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.1"
+    },
+    "laminas/laminas-code": {
+        "version": "3.4.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.2.1"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
+    },
     "marc-mabe/php-enum": {
         "version": "v4.3.0"
     },
@@ -90,6 +105,9 @@
     "neos/event-sourcing": {
         "version": "dev-standalone-usage"
     },
+    "neos/event-sourcing-symfony-bridge": {
+        "version": "dev-main"
+    },
     "neos/utility-objecthandling": {
         "version": "6.3.3"
     },
@@ -98,6 +116,9 @@
     },
     "php": {
         "version": "7.2"
+    },
+    "phpstan/phpdoc-parser": {
+        "version": "0.4.9"
     },
     "prooph/common": {
         "version": "v4.4.0"
@@ -145,6 +166,21 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "slevomat/coding-standard": {
+        "version": "6.4.1"
+    },
+    "squizlabs/php_codesniffer": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "0dc9cceda799fd3a08b96987e176a261028a3709"
+        }
+    },
+    "symfony/amqp-messenger": {
+        "version": "v5.1.9"
+    },
     "symfony/asset": {
         "version": "v5.1.8"
     },
@@ -177,6 +213,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v5.1.8"
+    },
+    "symfony/doctrine-messenger": {
+        "version": "v5.1.9"
     },
     "symfony/dotenv": {
         "version": "v5.1.2"
@@ -236,8 +275,35 @@
     "symfony/http-kernel": {
         "version": "v5.1.2"
     },
+    "symfony/messenger": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "e9a414b113ceadbf4e52abe37bf8f1b443f06ccb"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
+    },
     "symfony/orm-pack": {
         "version": "v2.0.0"
+    },
+    "symfony/phpunit-bridge": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "6d0e35f749d5f4bfe1f011762875275cd3f9874f"
+        },
+        "files": [
+            ".env.test",
+            "bin/phpunit",
+            "phpunit.xml.dist",
+            "tests/bootstrap.php"
+        ]
     },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.17.1"
@@ -262,6 +328,9 @@
     },
     "symfony/property-info": {
         "version": "v5.1.8"
+    },
+    "symfony/redis-messenger": {
+        "version": "v5.1.9"
     },
     "symfony/routing": {
         "version": "5.1",

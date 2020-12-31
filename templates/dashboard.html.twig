@@ -1,21 +1,80 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Author</th>
-            <th scope="col">Comment</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for comment in comments %}
-            <tr>
-                <td>{{ comment.author|e }}</td>
-                <td>{{ comment.comment|e }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+
+    <div class="row mt-3">
+        <div class="col-md-12 mt-3">
+            <div class="card text-center">
+                <div class="card-header">
+                    Flow Eventsourcing
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Welcome to the Flow EventSourcing example
+                    </h5>
+                    <p class="card-text">
+                        This is a small example how you can use the flow eventsourcing package with symfony.
+                    </p>
+
+                </div>
+                <div class="card-footer text-muted">
+                    2 days ago
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-4 mt-3">
+            <div class="card">
+                <h5 class="card-header">
+                    <i class="fa fa-blog"></i> Blog
+                </h5>
+                <div class="card-body">
+                    <h5 class="card-title">Create or update a blog</h5>
+                    <p class="card-text">
+                        With supporting text below as a natural lead-in to additional content.
+                    </p>
+
+                    <a href="{{ path('blog') }}" class="btn btn-primary">
+                        <i class="fa fa-blog"></i> Go to the blog
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mt-3">
+            <div class="card">
+                <h5 class="card-header">
+                    <i class="fa fa-comments"></i> Comments
+                </h5>
+                <div class="card-body">
+                    <h5 class="card-title">Edit or show a comment</h5>
+                    <p class="card-text">
+                        With supporting text below as a natural lead-in to additional content.
+                    </p>
+
+                    <a href="{{ path('comment') }}" class="btn btn-primary">
+                        <i class="fa fa-comments"></i>  Go to the comments
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mt-3">
+            <div class="card">
+                <h5 class="card-header">
+                    <i class="fa fa-users"></i> Users
+                </h5>
+                <div class="card-body">
+                    <h5 class="card-title">Create or update a user</h5>
+                    <p class="card-text">
+                        With supporting text below as a natural lead-in to additional content.
+                    </p>
+
+                    <a href="{{ path('user') }}" class="btn btn-primary">
+                        <i class="fa fa-users"></i> Go to the users
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 

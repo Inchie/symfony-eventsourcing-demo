@@ -18,7 +18,6 @@ class DashboardController extends AbstractController
     )
     {
         $this->commentListFinder = $commentListFinder;
-
     }
 
     /**

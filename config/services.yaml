@@ -40,4 +40,8 @@ services:
     App\Domain\Projection\UserList\UserListProjector:
         public: true
 
+    App\Domain\Projection\BlogList\BlogListProjector:
+        public: true
+
     App\Domain\Context\User\Repository\UserRepository: '@App\Domain\Context\User\Infrastructure\DoctrineUserRepository'
+    App\Domain\Context\Blogging\Repository\BlogRepository: '@App\Domain\Context\Blogging\Infrastructure\DoctrineBlogRepository'
