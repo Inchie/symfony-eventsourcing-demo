@@ -17,3 +17,5 @@
 
 /.docker/data/mysql/conf.d
 /.docker/data/mysql/mysql-datadir
+
+.idea
