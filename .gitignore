@@ -16,6 +16,6 @@
 ###< symfony/phpunit-bridge ###
 
 /.docker/data/mysql/conf.d
-/.docker/data/mysql/mysql-datadir
+/.docker/data/mysql/mysql-datadir/
 
 .idea
