@@ -8,6 +8,12 @@ This example demonstrates EventSourcing with symfony & flow.
 cd .docker
 ```
 
+Change the path to your local directory
+
+```
+vim .env
+```
+
 ```
 docker-compose up -d
 ```
@@ -15,7 +21,7 @@ docker-compose up -d
 Execute into the event-sourcing.app container
 
 ```
-docker exec -it event-sourcing.app bash
+docker exec -it eventsourcing-app bash
 ```
 
 #### Inside the container
