@@ -13,12 +13,17 @@
                             Comments
                         </div>
                         <div class="card-body">
-
+                            {% if blog.comments|length > 0 %}
                             {% for comment in blog.comments %}
                                 <div class="alert alert-secondary">
                                     {{ comment.author|e }}: {{ comment.comment }}
                                 </div>
                             {% endfor %}
+                            {% else %}
+                                <div class="alert alert-warning">
+                                    <i class="fa fa-comments"></i> No comments were found.
+                                </div>
+                            {% endif %}
 
                         </div>
                     </div>
@@ -53,10 +58,12 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="card">
+                        <div class="card-header">
+                            <strong>New comment</strong>
+                        </div>
                         <div class="card-body">
                             <form action="{{ path('comment-create') }}" class="form-horizontal"  method="POST">
                                 <div class="form-group">
-                                    <label>New comment</label>
                                     <textarea name="form[comment]" required="required" class="form-control"></textarea>
                                     <small id="nameHelp" class="form-text text-muted">Please insert a small comment.</small>
                                 </div>

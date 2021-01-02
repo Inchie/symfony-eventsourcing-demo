@@ -8,6 +8,7 @@
         <div class="col-md-12">
             <div class="row pt-3">
                 <div class="col-lg-7">
+                    {% if users|length > 0 %}
                     <table class="table">
                         <thead>
                         <tr>
@@ -33,10 +34,17 @@
                         {% endfor %}
                         </tbody>
                     </table>
-
+                    {% else %}
+                        <div class="alert alert-warning">
+                            <i class="fa fa-users"></i> No users were found.
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="col-lg-5">
                     <div class="card">
+                        <div class="card-header">
+                            <strong>Create a user</strong>
+                        </div>
                         <div class="card-body">
                             <form action="{{ path('user-create') }}" class="form-horizontal"  method="POST">
                                 <div class="form-group">

@@ -91,6 +91,7 @@ class UserController extends AbstractController
     public function userStream(string $stream)
     {
         return $this->render('user-stream.html.twig', [
+            'currentUser' => $this->userRepository->findByStream($stream),
             'users' => $this->userListFinder->execute(),
             'stream' => $this->userCommandHandler->handleStream($stream),
             'streamName' => $stream

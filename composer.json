@@ -1,6 +1,17 @@
 {
     "type": "project",
-    "license": "proprietary",
+    "description": "Demo of the Symfony bridge to integrate Event Sourcing and CQRS pattern in your Symfony framework.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sebastian Kurfürst",
+            "email": "sebastian.kurfuerst@sandstorm.de"
+        },
+        {
+            "name": "Timo Nussbaum",
+            "email": "timo.nussbaum@gmx.de"
+        }
+    ],
     "repositories": [
         {
             "type": "vcs",

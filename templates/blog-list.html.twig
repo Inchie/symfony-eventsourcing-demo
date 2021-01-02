@@ -8,6 +8,7 @@
         <div class="col-md-12">
             <div class="row pt-3">
                 <div class="col-lg-7">
+                    {% if blogs|length > 0 %}
                     <table class="table">
                         <thead>
                         <tr>
@@ -33,10 +34,19 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    {% else %}
+                        <div class="alert alert-warning">
+                            <i class="fa fa-blog"></i> No blogs were found.
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="col-lg-5">
                     <div class="card">
+                        <div class="card-header">
+                            <strong>Create a blog</strong>
+                        </div>
                         <div class="card-body">
+                            {% if users|length > 0 %}
                             <form action="{{ path('blog-create') }}" class="form-horizontal"  method="POST">
                                 <div class="form-group">
                                     <label>Name</label>
@@ -55,6 +65,12 @@
                                     <i class="fa fa-plus"></i> Create Blog
                                 </button>
                             </form>
+                            {% else %}
+                                <div class="alert alert-danger text-center">
+                                    <i class="fa fa-users fa-4x"></i> <br/>
+                                    You have to create a user first!.
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

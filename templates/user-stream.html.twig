@@ -28,8 +28,10 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="card">
+                        <div class="card-header">
+                            <strong>User '{{ currentUser.name|e }}' with the stream '{{ streamName }}'</strong>
+                        </div>
                         <div class="card-body">
-                            <h4>Stream: {{ streamName }}</h4>
                             <table class="table">
                                 <thead>
                                 <tr>

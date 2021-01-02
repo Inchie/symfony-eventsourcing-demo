@@ -34,6 +34,9 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="card">
+                        <div class="card-header">
+                            <strong>Edit the user '{{ currentUser.name|e }}'</strong>
+                        </div>
                         <div class="card-body">
                             <form action="{{ path('user-update') }}" class="form-horizontal"  method="POST">
                                 <div class="form-group">

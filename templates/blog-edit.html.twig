@@ -36,12 +36,15 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="card">
+                        <div class="card-header">
+                            <strong>Edit the blog '{{ currentBlog.name|e }}'</strong>
+                        </div>
                         <div class="card-body">
                             <form action="{{ path('blog-update') }}" class="form-horizontal"  method="POST">
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input type="string" value="{{ currentBlog.name|e }}" name="form[name]" required="required" class="form-control" />
-                                    <small id="nameHelp" class="form-text text-muted">We'll never share your employee with anyone else.</small>
+                                    <small id="nameHelp" class="form-text text-muted">Please change the blog name.</small>
                                 </div>
                                 <button type="submit" class="btn btn-primary">
                                     <input type="hidden" name="form[stream]" value="{{ currentBlog.stream|e }}" />

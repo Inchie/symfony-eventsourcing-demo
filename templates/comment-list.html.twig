@@ -8,6 +8,7 @@
         <div class="col-md-12">
             <div class="row pt-3">
                 <div class="col-lg-12">
+                    {% if blogs|length > 0 %}
                     <table class="table">
                         <thead>
                         <tr>
@@ -26,10 +27,10 @@
                                     <td class="align-middle">{{ comment.comment|e }}</td>
                                     <td>
                                         <a href="{{ path('blog-edit', { 'stream': blog.stream }) }}" class="btn btn-outline-warning btn-sm">
-                                            <i class="fa fa-edit"></i> Edit
+                                            <i class="fa fa-edit"></i> Edit blog
                                         </a>
                                         <a href="{{ path('blog-show', { 'stream': blog.stream }) }}" class="btn btn-outline-warning btn-sm">
-                                            <i class="fa fa-eye"></i> Show
+                                            <i class="fa fa-eye"></i> Show blog
                                         </a>
                                     </td>
                                 </tr>
@@ -37,6 +38,11 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    {% else %}
+                        <div class="alert alert-warning">
+                            <i class="fa fa-blogs"></i> No comments in blogs were found.
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="col-lg-5">
 
