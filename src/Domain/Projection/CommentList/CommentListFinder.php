@@ -19,7 +19,7 @@ class CommentListFinder
 
     public function execute()
     {
-        /*
+        /* This is a example for a finder with sql statement
         $sql = 'Select payload FROM foo_events';
 
         $result = $this->entityManager
