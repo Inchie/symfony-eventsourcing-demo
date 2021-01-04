@@ -8,17 +8,17 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class BloggingEventStore
 {
-    private $eventStore;
+    private $kernelInterface;
 
     public function __construct(KernelInterface $kernelInterface)
     {
-        $this->eventStore = $kernelInterface
-            ->getContainer()
-            ->get('neos_eventsourcing.eventstore.blog');
+        $this->kernelInterface = $kernelInterface;
     }
 
     public function create()
     {
-        return $this->eventStore;
+        return $this->kernelInterface
+            ->getContainer()
+            ->get('neos_eventsourcing.eventstore.blog');
     }
 }
