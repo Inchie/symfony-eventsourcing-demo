@@ -55,13 +55,6 @@ class CommentListProjector implements ProjectorInterface, EventSubscriberInterfa
 
         $this->blogRepository->add($blog);
         $this->blogRepository->flush();
-
-        //dump("Hier würde ich in die tabelle schreiben");
-        /*$this->connection->insert(self::TABLE_NAME, [
-            'author' => $event->getAuthorIdentifier(),
-            'comment' => $event->getComment()
-        ]); // AUCH LEGITIM, hier ORM zu verwenden
-        */
     }
 
     /*
@@ -74,6 +67,6 @@ class CommentListProjector implements ProjectorInterface, EventSubscriberInterfa
 
     public function reset(): void
     {
-        // TODO: hier würde ich die Tabelle leeren
+        throw new \Exception('Reset is not supported at the moment');
     }
 }

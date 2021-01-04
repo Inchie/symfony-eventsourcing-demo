@@ -24,10 +24,10 @@ class BlogListProjector implements ProjectorInterface, EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            // NOTE!!! you always have to use "when*" namings, as otherwise, the EventListenerInvoker
+            // NOTE!!! You always have to use "when*" namings, as otherwise, the EventListenerInvoker
             // will not properly call the right methods here.
 
-            // we only use the EventSubscriber from symfony to figure out which listeners should be called.
+            // We only use the EventSubscriber from symfony to figure out which listeners should be called.
             BlogWasCreated::class => ['whenBlogWasCreated'],
             BlogWasUpdated::class => ['whenBlogWasUpdated']
         ];
@@ -57,6 +57,6 @@ class BlogListProjector implements ProjectorInterface, EventSubscriberInterface
 
     public function reset(): void
     {
-        // TODO: hier würde ich die Tabelle leeren
+        throw new \Exception('Reset is not supported at the moment');
     }
 }
