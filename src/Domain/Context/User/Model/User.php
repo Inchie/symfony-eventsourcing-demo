@@ -61,17 +61,17 @@ class User
         $this->mail = $mail;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getMail()
+    public function getMail(): string
     {
         return $this->mail;
     }
 
-    public function getStream()
+    public function getStream(): string
     {
         return $this->stream;
     }

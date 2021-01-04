@@ -58,12 +58,12 @@ class Comment
         $this->blog = $blog;
     }
 
-    public function getAuthor()
+    public function getAuthor(): string
     {
         return $this->author;
     }
 
-    public function getComment()
+    public function getComment(): string
     {
         return $this->comment;
     }

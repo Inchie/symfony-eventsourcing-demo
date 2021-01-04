@@ -25,23 +25,21 @@ class CommentListProjector implements ProjectorInterface, EventSubscriberInterfa
         $this->blogRepository = $blogRepository;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
-            // NOTE!!! you always have to use "when*" namings, as otherwise, the EventListenerInvoker
+            // NOTE!!! You always have to use "when*" namings, as otherwise, the EventListenerInvoker
             // will not properly call the right methods here.
 
-            // we only use the EventSubscriber from symfony to figure out which listeners should be called.
+            // We only use the EventSubscriber from symfony to figure out which listeners should be called.
             CommentWasCreated::class => ['whenCommentWasCreated']
         ];
     }
 
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    public function whenCommentWasCreated(CommentWasCreated $event, RawEvent $rawEvent)
+    public function whenCommentWasCreated(
+        CommentWasCreated $event,
+        RawEvent $rawEvent
+    ): void
     {
         $blog = $this->blogRepository->findByStream(
             $event->getBlogIdentifier()->jsonSerialize()

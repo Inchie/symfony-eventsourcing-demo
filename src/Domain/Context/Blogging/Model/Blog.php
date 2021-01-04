@@ -75,7 +75,7 @@ class Blog
         string $author,
         string $comment,
         string $stream
-    )
+    ): void
     {
         $newComment = Comment::create(
             $author,
@@ -87,12 +87,12 @@ class Blog
         $this->comments->add($newComment);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getAuthor()
+    public function getAuthor(): string
     {
         return $this->author;
     }
@@ -102,7 +102,7 @@ class Blog
         return $this->comments;
     }
 
-    public function getStream()
+    public function getStream(): string
     {
         return $this->stream;
     }

@@ -23,8 +23,6 @@ class UserCommandHandler
     public function __construct(UserEventStore $eventStore)
     {
         $this->eventStore = $eventStore->create();
-
-        // TODO: also inject finders from projections which you want :)
     }
 
     /**

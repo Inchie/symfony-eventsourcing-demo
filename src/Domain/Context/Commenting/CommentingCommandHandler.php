@@ -21,8 +21,6 @@ class CommentingCommandHandler
     public function __construct(BloggingEventStore $eventStore)
     {
         $this->eventStore = $eventStore->create();
-
-        // TODO: also inject finders from projections which you want :)
     }
 
     public function handleCreateComment(CreateComment $command)
