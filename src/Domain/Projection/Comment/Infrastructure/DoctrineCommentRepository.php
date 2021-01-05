@@ -127,4 +127,15 @@ class DoctrineCommentRepository implements CommentRepository
                 $queryParams
             );
     }
+
+    public function truncate()
+    {
+        $query = "
+            TRUNCATE TABLE comment;
+        ";
+
+        $this->entityManager
+            ->getConnection()
+            ->exec($query);
+    }
 }

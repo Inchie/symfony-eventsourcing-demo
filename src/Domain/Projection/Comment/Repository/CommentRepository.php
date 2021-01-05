@@ -17,4 +17,6 @@ interface CommentRepository
     public function findByBlog(BlogIdentifier $blogIdentifier): \ArrayIterator;
 
     public function addByEvent(CommentWasCreated $event);
+
+    public function truncate();
 }

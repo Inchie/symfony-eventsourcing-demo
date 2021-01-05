@@ -20,4 +20,6 @@ interface UserRepository
     public function addByEvent(UserWasCreated $event);
 
     public function updateByEvent(UserWasUpdated $event);
+
+    public function truncate();
 }

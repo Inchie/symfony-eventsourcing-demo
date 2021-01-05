@@ -141,4 +141,16 @@ class DoctrineBlogRepository implements BlogRepository
                 $queryParams
             );
     }
+
+    public function truncate()
+    {
+        $query = "
+            TRUNCATE TABLE blog;
+        ";
+
+
+        $this->entityManager
+            ->getConnection()
+            ->exec($query);
+    }
 }

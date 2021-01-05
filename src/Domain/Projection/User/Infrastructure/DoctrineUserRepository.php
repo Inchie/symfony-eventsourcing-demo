@@ -142,4 +142,15 @@ class DoctrineUserRepository implements UserRepository
                 $queryParams
             );
     }
+
+    public function truncate()
+    {
+        $query = "
+            TRUNCATE TABLE user;
+        ";
+
+        $this->entityManager
+            ->getConnection()
+            ->exec($query);
+    }
 }

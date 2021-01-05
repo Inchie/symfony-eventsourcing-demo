@@ -44,6 +44,6 @@ class UserProjector implements ProjectorInterface, EventSubscriberInterface
 
     public function reset(): void
     {
-        throw new \Exception('Reset is not supported at the moment');
+        $this->userRepository->truncate();
     }
 }

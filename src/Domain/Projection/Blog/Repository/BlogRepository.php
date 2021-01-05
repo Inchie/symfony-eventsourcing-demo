@@ -20,4 +20,6 @@ interface BlogRepository
     public function addByEvent(BlogWasCreated $event);
 
     public function updateByEvent(BlogWasUpdated $event);
+
+    public function truncate();
 }
