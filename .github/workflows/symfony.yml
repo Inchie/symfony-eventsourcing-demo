@@ -71,3 +71,4 @@ jobs:
         run: |
           cp phpunit.xml.ci phpunit.xml
           make test
+          
