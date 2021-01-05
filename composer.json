@@ -1,4 +1,5 @@
 {
+    "name": "neos/event-sourcing-demo",
     "type": "project",
     "description": "Demo of the Symfony bridge to integrate Event Sourcing and CQRS pattern in your Symfony framework.",
     "license": "MIT",
