@@ -22,10 +22,10 @@
                                 <td>{{ blog.name|e }}</td>
                                 <td>{{ blog.author|e }}</td>
                                 <td>
-                                    <a href="{{ path('blog-edit', { 'stream': blog.stream }) }}" class="btn btn-outline-warning btn-sm">
+                                    <a href="{{ path('blog-edit', { 'id': blog.id }) }}" class="btn btn-outline-warning btn-sm">
                                         <i class="fa fa-edit"></i> Edit
                                     </a>
-                                    <a href="{{ path('blog-show', { 'stream': blog.stream }) }}" class="btn btn-outline-warning btn-sm">
+                                    <a href="{{ path('blog-show', { 'id': blog.id }) }}" class="btn btn-outline-warning btn-sm">
                                         <i class="fa fa-eye"></i> Show
                                     </a>
                                 </td>
@@ -47,7 +47,7 @@
                                     <small id="nameHelp" class="form-text text-muted">Please change the blog name.</small>
                                 </div>
                                 <button type="submit" class="btn btn-primary">
-                                    <input type="hidden" name="form[stream]" value="{{ currentBlog.stream|e }}" />
+                                    <input type="hidden" name="form[id]" value="{{ currentBlog.id|e }}" />
                                     <i class="fa fa-plus"></i> Update Blog
                                 </button>
                             </form>

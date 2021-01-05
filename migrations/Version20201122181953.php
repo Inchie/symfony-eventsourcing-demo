@@ -16,7 +16,17 @@ final class Version20201122181953 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        $this->addSql('CREATE TABLE blog (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(100) NOT NULL, author LONGTEXT NOT NULL, stream LONGTEXT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql(
+            '
+                CREATE TABLE `blog`
+                    (
+                        id CHAR(36) NOT NULL, 
+                        name VARCHAR(100) NOT NULL, 
+                        author LONGTEXT NOT NULL
+                    )
+                DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
+            '
+        );
     }
 
     public function down(Schema $schema) : void

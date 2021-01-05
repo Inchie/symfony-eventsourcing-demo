@@ -2,27 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Projection\CommentList;
+namespace App\Domain\Projection\Comment;
 
-use App\Domain\Context\Blogging\Model\Blog;
-use App\Domain\Context\Blogging\Repository\BlogRepository;
 use App\Domain\Context\Commenting\Event\CommentWasCreated;
-use Doctrine\DBAL\Connection;
+use App\Domain\Projection\Blog\Repository\BlogRepository;
+use App\Domain\Projection\Comment\Repository\CommentRepository;
 use Neos\EventSourcing\EventStore\RawEvent;
 use Neos\EventSourcing\Projection\ProjectorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class CommentListProjector implements ProjectorInterface, EventSubscriberInterface
+class CommentProjector implements ProjectorInterface, EventSubscriberInterface
 {
     public const TABLE_NAME = 'comment_list';
 
-    private $blogRepository;
+    private $commentRepository;
 
     public function __construct(
-        BlogRepository $blogRepository
+        CommentRepository $commentRepository
     )
     {
-        $this->blogRepository = $blogRepository;
+        $this->commentRepository = $commentRepository;
     }
 
     public static function getSubscribedEvents(): array
@@ -41,18 +40,7 @@ class CommentListProjector implements ProjectorInterface, EventSubscriberInterfa
         RawEvent $rawEvent
     ): void
     {
-        $blog = $this->blogRepository->findByStream(
-            $event->getBlogIdentifier()->jsonSerialize()
-        );
-        /* @var $blog Blog */
-        $blog->createCommentByRequest(
-            $event->getAuthorIdentifier()->jsonSerialize(),
-            $event->getComment(),
-            $event->getStreamName()
-        );
-
-        $this->blogRepository->add($blog);
-        $this->blogRepository->flush();
+        $this->commentRepository->addByEvent($event);
     }
 
     /*

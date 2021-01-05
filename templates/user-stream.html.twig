@@ -12,14 +12,14 @@
                         <thead>
                         <tr>
                             <th scope="col">Name</th>
-                            <th scope="col">Stream</th>
+                            <th scope="col">Identifier</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for user in users %}
                             <tr>
                                 <td>{{ user.name|e }}</td>
-                                <td>{{ user.stream|e }}</td>
+                                <td>{{ user.id|e }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -29,7 +29,8 @@
                 <div class="col-lg-7">
                     <div class="card">
                         <div class="card-header">
-                            <strong>User '{{ currentUser.name|e }}' with the stream '{{ streamName }}'</strong>
+                            <strong>User: '{{ currentUser.name|e }}'</strong><br/>
+                            ID: '{{ currentUser.id }}'
                         </div>
                         <div class="card-body">
                             <table class="table">

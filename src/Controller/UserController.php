@@ -6,9 +6,10 @@ namespace App\Controller;
 
 use App\Domain\Context\User\Command\CreateUser;
 use App\Domain\Context\User\Command\UpdateUser;
-use App\Domain\Context\User\Repository\UserRepository;
 use App\Domain\Context\User\UserCommandHandler;
-use App\Domain\Projection\UserList\UserListFinder;
+use App\Domain\Projection\User\UserFinder;
+use App\Domain\Projection\User\Repository\UserRepository;
+use App\Domain\Projection\User\UserIdentifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,19 +18,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
-
     private $userCommandHandler;
-    private $userListFinder;
+    private $userFinder;
     private $userRepository;
 
     public function __construct(
         UserCommandHandler $userCommandHandler,
-        UserListFinder $userListFinder,
+        UserFinder $userFinder,
         UserRepository $userRepository
     )
     {
         $this->userCommandHandler = $userCommandHandler;
-        $this->userListFinder = $userListFinder;
+        $this->userFinder = $userFinder;
         $this->userRepository = $userRepository;
     }
 
@@ -39,7 +39,7 @@ class UserController extends AbstractController
     public function list(): Response
     {
         return $this->render('user-list.html.twig', [
-            'users' => $this->userListFinder->execute()
+            'users' => $this->userFinder->execute()
         ]);
     }
 
@@ -59,13 +59,14 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/edit/{stream}", name="user-edit")
+     * @Route("/user/edit/{id}", name="user-edit")
      */
-    public function edit(string $stream)
+    public function edit(string $id)
     {
+        $userIdentifier = UserIdentifier::fromString($id);
         return $this->render('user-edit.html.twig', [
-            'users' => $this->userListFinder->execute(),
-            'currentUser' => $this->userRepository->findByStream($stream)
+            'users' => $this->userFinder->execute(),
+            'currentUser' => $this->userRepository->findById($userIdentifier)
         ]);
     }
 
@@ -76,9 +77,9 @@ class UserController extends AbstractController
     {
         $this->userCommandHandler->handleUpdateUser(
             new UpdateUser(
+                UserIdentifier::fromString($request->request->get('form')['id']),
                 $request->request->get('form')['name'],
-                $request->request->get('form')['mail'],
-                $request->request->get('form')['stream']
+                $request->request->get('form')['mail']
             )
         );
 
@@ -86,15 +87,15 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/stream/{stream}", name="user-stream")
+     * @Route("/user/id/{id}", name="user-stream")
      */
-    public function userStream(string $stream)
+    public function userStream(string $id)
     {
+        $userIdentifier = UserIdentifier::fromString($id);
         return $this->render('user-stream.html.twig', [
-            'currentUser' => $this->userRepository->findByStream($stream),
-            'users' => $this->userListFinder->execute(),
-            'stream' => $this->userCommandHandler->handleStream($stream),
-            'streamName' => $stream
+            'currentUser' => $this->userRepository->findById($userIdentifier),
+            'users' => $this->userFinder->execute(),
+            'stream' => $this->userCommandHandler->handleStream($userIdentifier)
         ]);
     }
 }

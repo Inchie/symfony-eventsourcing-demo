@@ -7,9 +7,11 @@ namespace App\Controller;
 use App\Domain\Context\Blog\Command\UpdateBlog;
 use App\Domain\Context\Blogging\BloggingCommandHandler;
 use App\Domain\Context\Blogging\Command\CreateBlog;
-use App\Domain\Context\Blogging\Infrastructure\DoctrineBlogRepository;
-use App\Domain\Context\User\Repository\UserRepository;
-use App\Domain\ValueObject\UserIdentifier;
+use App\Domain\Projection\Blog\BlogFinder;
+use App\Domain\Projection\Blog\BlogIdentifier;
+use App\Domain\Projection\Blog\Infrastructure\DoctrineBlogRepository;
+use App\Domain\Projection\User\Repository\UserRepository;
+use App\Domain\Projection\User\UserIdentifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,15 +23,18 @@ class BlogController extends AbstractController
     private $userRepository;
     private $bloggingCommandHandler;
     private $blogRepository;
+    private $blogFinder;
 
     public function __construct(
         UserRepository $userRepository,
         BloggingCommandHandler $bloggingCommandHandler,
-        DoctrineBlogRepository $blogRepository
+        DoctrineBlogRepository $blogRepository,
+        BlogFinder $blogFinder
     ) {
         $this->userRepository = $userRepository;
         $this->bloggingCommandHandler = $bloggingCommandHandler;
         $this->blogRepository = $blogRepository;
+        $this->blogFinder = $blogFinder;
     }
 
     /**
@@ -59,12 +64,13 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/blog/edit/{stream}", name="blog-edit")
+     * @Route("/blog/edit/{id}", name="blog-edit")
      */
-    public function edit(string $stream)
+    public function edit(string $id)
     {
+        $blogIdentifier = BlogIdentifier::fromString($id);
         return $this->render('blog-edit.html.twig', [
-            'currentBlog' => $this->blogRepository->findByStream($stream),
+            'currentBlog' => $this->blogRepository->findById($blogIdentifier),
             'blogs' => $this->blogRepository->findAll()
         ]);
     }
@@ -76,8 +82,8 @@ class BlogController extends AbstractController
     {
         $this->bloggingCommandHandler->handleUpdateBlog(
             new UpdateBlog(
-                $request->request->get('form')['name'],
-                $request->request->get('form')['stream']
+                BlogIdentifier::fromString($request->request->get('form')['id']),
+                $request->request->get('form')['name']
             )
         );
 
@@ -85,14 +91,15 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/blog/show/{stream}", name="blog-show")
+     * @Route("/blog/show/{id}", name="blog-show")
      */
-    public function show(string $stream)
+    public function show(string $id)
     {
+        $blogIdentifier = BlogIdentifier::fromString($id);
         return $this->render('blog-show.html.twig', [
             'users' => $this->userRepository->findAll(),
-            'blog' => $this->blogRepository->findByStream($stream),
-            'stream' => $this->bloggingCommandHandler->handleStream($stream),
+            'blog' => $this->blogFinder->execute($blogIdentifier),
+            'stream' => $this->bloggingCommandHandler->handleStream($blogIdentifier),
         ]);
     }
 }

@@ -8,6 +8,10 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class BloggingEventStore
 {
+    public const BLOG_STREAM_NAME = 'blog';
+
+    public const COMMENT_STREAM_NAME = 'comment';
+
     private $kernelInterface;
 
     public function __construct(KernelInterface $kernelInterface)

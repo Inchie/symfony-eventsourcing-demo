@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Projection\CommentList;
+namespace App\Domain\Projection\Comment;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-class CommentListFinder
+class CommentFinder
 {
     private $entityManager;
 

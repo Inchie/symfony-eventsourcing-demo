@@ -34,14 +34,15 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Domain\Projection\CommentList\CommentListProjector:
+    App\Domain\Projection\Comment\CommentProjector:
         public: true
 
-    App\Domain\Projection\UserList\UserListProjector:
+    App\Domain\Projection\User\UserProjector:
         public: true
 
-    App\Domain\Projection\BlogList\BlogListProjector:
+    App\Domain\Projection\Blog\BlogProjector:
         public: true
 
-    App\Domain\Context\User\Repository\UserRepository: '@App\Domain\Context\User\Infrastructure\DoctrineUserRepository'
-    App\Domain\Context\Blogging\Repository\BlogRepository: '@App\Domain\Context\Blogging\Infrastructure\DoctrineBlogRepository'
+    App\Domain\Projection\Blog\Repository\BlogRepository: '@App\Domain\Projection\Blog\Infrastructure\DoctrineBlogRepository'
+    App\Domain\Projection\Comment\Repository\CommentRepository: '@App\Domain\Projection\Comment\Infrastructure\DoctrineCommentRepository'
+    App\Domain\Projection\User\Repository\UserRepository: '@App\Domain\Projection\User\Infrastructure\DoctrineUserRepository'

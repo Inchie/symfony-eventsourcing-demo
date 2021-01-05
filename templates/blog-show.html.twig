@@ -16,7 +16,7 @@
                             {% if blog.comments|length > 0 %}
                             {% for comment in blog.comments %}
                                 <div class="alert alert-secondary">
-                                    {{ comment.author|e }}: {{ comment.comment }}
+                                    {{ comment.author }}: {{ comment.comment }}
                                 </div>
                             {% endfor %}
                             {% else %}
@@ -71,12 +71,12 @@
                                     <label>Author</label>
                                     <select class="browser-default custom-select" name="form[user]">
                                         {% for user in users %}
-                                            <option value="{{ user.stream }}">{{ user.name|e }}</option>
+                                            <option value="{{ user.id }}">{{ user.name|e }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary">
-                                    <input type="hidden" name="form[blog]" value="{{ blog.stream|e }}" />
+                                    <input type="hidden" name="form[blog]" value="{{ blog.id|e }}" />
                                     <i class="fa fa-plus"></i> Create Comment
                                 </button>
                             </form>

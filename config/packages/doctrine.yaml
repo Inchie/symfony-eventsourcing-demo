@@ -20,12 +20,18 @@ doctrine:
             Blog:
                 is_bundle: false
                 type: annotation
-                dir: '%kernel.project_dir%/src/Domain/Context/Blogging/Model'
-                prefix: 'App\Domain\Context\Blogging\Model'
+                dir: '%kernel.project_dir%/src/Domain/Projection/Blog'
+                prefix: 'App\Domain\Projection\Blog'
                 alias: Blog
+            Comment:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Domain/Projection/Comment'
+                prefix: 'App\Domain\Projection\Comment'
+                alias: User
             User:
                 is_bundle: false
                 type: annotation
-                dir: '%kernel.project_dir%/src/Domain/Context/User/Model'
-                prefix: 'App\Domain\Context\User\Model'
+                dir: '%kernel.project_dir%/src/Domain/Projection/User'
+                prefix: 'App\Domain\Projection\User'
                 alias: User

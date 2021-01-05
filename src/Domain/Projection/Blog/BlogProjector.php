@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Projection\BlogList;
+namespace App\Domain\Projection\Blog;
 
 use App\Domain\Context\Blog\Event\BlogWasUpdated;
 use App\Domain\Context\Blogging\Event\BlogWasCreated;
-use App\Domain\Context\Blogging\Model\Blog;
-use App\Domain\Context\Blogging\Repository\BlogRepository;
+use App\Domain\Projection\Blog\Repository\BlogRepository;
 use Neos\EventSourcing\EventStore\RawEvent;
 use Neos\EventSourcing\Projection\ProjectorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class BlogListProjector implements ProjectorInterface, EventSubscriberInterface
+class BlogProjector implements ProjectorInterface, EventSubscriberInterface
 {
     private $blogRepository;
 
@@ -35,24 +34,12 @@ class BlogListProjector implements ProjectorInterface, EventSubscriberInterface
 
     public function whenBlogWasCreated(BlogWasCreated $event, RawEvent $rawEvent)
     {
-        $newBlog = Blog::create(
-            $event->getName(),
-            $event->getAuthor()->jsonSerialize(),
-            $event->getStreamName()
-        );
-        $this->blogRepository->add($newBlog);
-        $this->blogRepository->flush();
+        $this->blogRepository->addByEvent($event);
     }
 
     public function whenBlogWasUpdated(BlogWasUpdated $event, RawEvent $rawEvent)
     {
-        $blog = $this->blogRepository->findByStream($event->getStreamName());
-        $blog->update(
-            $event->getName()
-        );
-
-        $this->blogRepository->add($blog);
-        $this->blogRepository->flush();
+        $this->blogRepository->updateByEvent($event);
     }
 
     public function reset(): void

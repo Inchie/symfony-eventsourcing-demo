@@ -18,13 +18,11 @@ final class Version20201121170017 extends AbstractMigration
     {
         $this->addSql(
             '
-                CREATE TABLE user 
+                CREATE TABLE `user` 
                     (
-                        id INT AUTO_INCREMENT NOT NULL, 
+                        id CHAR(36) NOT NULL, 
                         name VARCHAR(100) NOT NULL, 
-                        mail LONGTEXT NOT NULL, 
-                        stream LONGTEXT NOT NULL, 
-                        PRIMARY KEY(id)
+                        mail LONGTEXT NOT NULL
                     ) 
                 DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
             '

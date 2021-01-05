@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\Blogging\Command;
 
-use App\Domain\ValueObject\UserIdentifier;
+use App\Domain\Projection\User\UserIdentifier;
 
 class CreateBlog
 {
@@ -18,11 +18,6 @@ class CreateBlog
      */
     private $authorIdentifier;
 
-    /**
-     * CreateBlog constructor.
-     * @param string $name
-     * @param UserIdentifier $authorIdentifier
-     */
     public function __construct(string $name, UserIdentifier $authorIdentifier)
     {
         $this->name = $name;

@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Projection\UserList;
+namespace App\Domain\Projection\User;
 
 use App\Domain\Context\User\Event\UserWasCreated;
 use App\Domain\Context\User\Event\UserWasUpdated;
-use App\Domain\Context\User\Model\User;
-use App\Domain\Context\User\Repository\UserRepository;
+use App\Domain\Projection\User\Repository\UserRepository;
 use Neos\EventSourcing\EventStore\RawEvent;
 use Neos\EventSourcing\Projection\ProjectorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class UserListProjector implements ProjectorInterface, EventSubscriberInterface
+class UserProjector implements ProjectorInterface, EventSubscriberInterface
 {
     private $userRepository;
 
@@ -35,25 +34,12 @@ class UserListProjector implements ProjectorInterface, EventSubscriberInterface
 
     public function whenUserWasCreated(UserWasCreated $event, RawEvent $rawEvent)
     {
-        $newUser = User::create(
-            $event->getName(),
-            $event->getMail(),
-            $event->getStreamName()
-        );
-        $this->userRepository->add($newUser);
-        $this->userRepository->flush();
+        $this->userRepository->addByEvent($event);
     }
 
     public function whenUserWasUpdated(UserWasUpdated $event, RawEvent $rawEvent)
     {
-        $user = $this->userRepository->findByStream($event->getStreamName());
-        $user->update(
-            $event->getName(),
-            $event->getMail()
-        );
-
-        $this->userRepository->add($user);
-        $this->userRepository->flush();
+        $this->userRepository->updateByEvent($event);
     }
 
     public function reset(): void

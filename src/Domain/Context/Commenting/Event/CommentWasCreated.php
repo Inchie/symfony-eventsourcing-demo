@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\Commenting\Event;
 
+use App\Domain\Projection\Comment\CommentIdentifier;
 use App\Domain\ValueObject\BlogIdentifier;
 use App\Domain\ValueObject\UserIdentifier;
 use Neos\EventSourcing\Event\DomainEventInterface;
 
 class CommentWasCreated implements DomainEventInterface
 {
+    /**
+     * @var CommentIdentifier
+     */
+    private $id;
+
     /**
      * @var BlogIdentifier
      */
@@ -25,21 +31,21 @@ class CommentWasCreated implements DomainEventInterface
      */
     private $comment;
 
-    /**
-     * @var string
-     */
-    private $streamName;
-
     public function __construct(
+        CommentIdentifier $id,
         BlogIdentifier $blogIdentifier,
         UserIdentifier $authorIdentifier,
-        string $comment,
-        string $streamName
+        string $comment
     ) {
+        $this->id = $id;
         $this->blogIdentifier = $blogIdentifier;
         $this->authorIdentifier = $authorIdentifier;
         $this->comment = $comment;
-        $this->streamName = $streamName;
+    }
+
+    public function getId(): CommentIdentifier
+    {
+        return $this->id;
     }
 
     public function getBlogIdentifier(): BlogIdentifier
@@ -55,13 +61,5 @@ class CommentWasCreated implements DomainEventInterface
     public function getComment(): string
     {
         return $this->comment;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStreamName(): string
-    {
-        return $this->streamName;
     }
 }

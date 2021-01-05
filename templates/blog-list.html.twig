@@ -23,10 +23,10 @@
                                 <td class="align-middle">{{ blog.name|e }}</td>
                                 <td class="align-middle">{{ blog.author|e }}</td>
                                 <td>
-                                    <a href="{{ path('blog-edit', { 'stream': blog.stream }) }}" class="btn btn-outline-warning btn-sm">
+                                    <a href="{{ path('blog-edit', { 'id': blog.id }) }}" class="btn btn-outline-warning btn-sm">
                                         <i class="fa fa-edit"></i> Edit
                                     </a>
-                                    <a href="{{ path('blog-show', { 'stream': blog.stream }) }}" class="btn btn-outline-warning btn-sm">
+                                    <a href="{{ path('blog-show', { 'id': blog.id }) }}" class="btn btn-outline-warning btn-sm">
                                         <i class="fa fa-eye"></i> Show
                                     </a>
                                 </td>
@@ -57,7 +57,7 @@
                                     <label>Author</label>
                                     <select class="browser-default custom-select" name="form[author]">
                                         {% for user in users %}
-                                            <option value="{{ user.stream }}">{{ user.name|e }}</option>
+                                            <option value="{{ user.id }}">{{ user.name|e }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>

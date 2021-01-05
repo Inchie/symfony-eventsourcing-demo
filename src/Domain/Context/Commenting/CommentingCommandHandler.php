@@ -7,6 +7,8 @@ namespace App\Domain\Context\Commenting;
 use App\Domain\Context\Blogging\Store\BloggingEventStore;
 use App\Domain\Context\Commenting\Command\CreateComment;
 use App\Domain\Context\Commenting\Event\CommentWasCreated;
+use App\Domain\Helper\StreamNameHelper;
+use App\Domain\Projection\Comment\Repository\CommentRepository;
 use Neos\EventSourcing\Event\DomainEvents;
 use Neos\EventSourcing\EventStore\EventStore;
 use Neos\EventSourcing\EventStore\StreamName;
@@ -18,28 +20,36 @@ class CommentingCommandHandler
      */
     private $eventStore;
 
-    public function __construct(BloggingEventStore $eventStore)
+    /**
+     * @var CommentRepository
+     */
+    private $commentRepository;
+
+    public function __construct(
+        BloggingEventStore $eventStore,
+        CommentRepository $commentRepository
+    )
     {
         $this->eventStore = $eventStore->create();
+        $this->commentRepository = $commentRepository;
     }
 
     public function handleCreateComment(CreateComment $command)
     {
         $this->requireUserToExist($command->getAuthorIdentifier());
 
-        $streamName = sprintf(
-            'Comment:%s',
-            uniqid()
-        );
-
+        $uuid = $this->commentRepository->nextIdentity();
         $event = new CommentWasCreated(
+            $uuid,
             $command->getBlogIdentifier(),
             $command->getAuthorIdentifier(),
-            $command->getComment(),
-            $streamName
+            $command->getComment()
         );
 
-        $stream = StreamName::fromString($streamName);
+        $stream = StreamNameHelper::fromString(
+            BloggingEventStore::COMMENT_STREAM_NAME,
+            $uuid
+        );
 
         $this->eventStore->commit($stream, DomainEvents::withSingleEvent(
             $event

@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\Blogging\Event;
 
-use App\Domain\ValueObject\UserIdentifier;
+use App\Domain\Projection\Blog\BlogIdentifier;
+use App\Domain\Projection\User\UserIdentifier;
 use Neos\EventSourcing\Event\DomainEventInterface;
 
 class BlogWasCreated implements DomainEventInterface
 {
+    /**
+     * @var BlogIdentifier
+     */
+    private $id;
+
     /**
      * @var string
      */
@@ -19,49 +25,29 @@ class BlogWasCreated implements DomainEventInterface
      */
     private $author;
 
-    /**
-     * @var string
-     */
-    private $streamName;
-
-    /**
-     * BlogWasCreated constructor.
-     * @param string $name
-     * @param UserIdentifier $author
-     * @param string $streamName
-     */
     public function __construct(
+        BlogIdentifier $id,
         string $name,
-        UserIdentifier $author,
-        string $streamName
+        UserIdentifier $author
     )
     {
+        $this->id = $id;
         $this->name = $name;
         $this->author = $author;
-        $this->streamName = $streamName;
     }
 
-    /**
-     * @return string
-     */
+    public function getId(): BlogIdentifier
+    {
+        return $this->id;
+    }
+
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return UserIdentifier
-     */
     public function getAuthor(): UserIdentifier
     {
         return $this->author;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStreamName(): string
-    {
-        return $this->streamName;
     }
 }

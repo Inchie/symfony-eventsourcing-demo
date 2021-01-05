@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Projection\UserList;
+namespace App\Domain\Projection\User;
 
-use App\Domain\Context\User\Repository\UserRepository;
+use App\Domain\Projection\User\Repository\UserRepository;
 
-class UserListFinder
+class UserFinder
 {
     private $userRepository;
 

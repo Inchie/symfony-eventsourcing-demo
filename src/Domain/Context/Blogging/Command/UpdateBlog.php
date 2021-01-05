@@ -4,40 +4,37 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\Blog\Command;
 
+use App\Domain\Projection\Blog\BlogIdentifier;
+
 class UpdateBlog
 {
+    /**
+     * @var BlogIdentifier
+     */
+    private $id;
+
     /**
      * @var string
      */
     private $name;
 
-    /**
-     * @var string
-     */
-    private $stream;
-
     public function __construct(
-        string $name,
-        string $stream
+        BlogIdentifier $id,
+        string $name
     )
     {
+        $this->id = $id;
         $this->name = $name;
-        $this->stream = $stream;
     }
 
-    /**
-     * @return string
-     */
+    public function getId(): BlogIdentifier
+    {
+        return $this->id;
+    }
+
+
     public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStream(): string
-    {
-        return $this->stream;
     }
 }

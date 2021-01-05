@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\User\Event;
 
+use App\Domain\Projection\User\UserIdentifier;
 use Neos\EventSourcing\Event\DomainEventInterface;
 
 class UserWasCreated implements DomainEventInterface
 {
+    /**
+     * @var UserIdentifier
+     */
+    private $id;
+
     /**
      * @var string
      */
@@ -18,49 +24,29 @@ class UserWasCreated implements DomainEventInterface
      */
     private $mail;
 
-    /**
-     * @var string
-     */
-    private $streamName;
-
-    /**
-     * UserWasCreated constructor.
-     * @param string $name
-     * @param string $mail
-     * @param string $streamName
-     */
     public function __construct(
+        UserIdentifier $id,
         string $name,
-        string $mail,
-        string $streamName
+        string $mail
     )
     {
+        $this->id = $id;
         $this->name = $name;
         $this->mail = $mail;
-        $this->streamName = $streamName;
     }
 
-    /**
-     * @return string
-     */
+    public function getId(): UserIdentifier
+    {
+        return $this->id;
+    }
+
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getMail(): string
     {
         return $this->mail;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStreamName(): string
-    {
-        return $this->streamName;
     }
 }

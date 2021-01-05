@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\User\Command;
 
+use App\Domain\Projection\User\UserIdentifier;
+
 class UpdateUser
 {
+    /**
+     * @var UserIdentifier
+     */
+    private $id;
+
     /**
      * @var string
      */
@@ -16,43 +23,29 @@ class UpdateUser
      */
     private $mail;
 
-    /**
-     * @var string
-     */
-    private $stream;
-
     public function __construct(
+        UserIdentifier $id,
         string $name,
-        string $mail,
-        string $stream
+        string $mail
     )
     {
+        $this->id = $id;
         $this->name = $name;
         $this->mail = $mail;
-        $this->stream = $stream;
     }
 
-    /**
-     * @return string
-     */
+    public function getId(): UserIdentifier
+    {
+        return $this->id;
+    }
+
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getMail(): string
     {
         return $this->mail;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStream(): string
-    {
-        return $this->stream;
     }
 }

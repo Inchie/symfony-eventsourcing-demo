@@ -8,6 +8,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class UserEventStore
 {
+    public const USER_STREAM_NAME = 'user';
+
     private $kernelInterface;
 
     public function __construct(KernelInterface $kernelInterface)

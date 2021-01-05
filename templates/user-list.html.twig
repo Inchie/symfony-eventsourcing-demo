@@ -23,10 +23,10 @@
                                 <td class="align-middle">{{ user.name|e }}</td>
                                 <td class="align-middle">{{ user.mail|e }}</td>
                                 <td>
-                                    <a href="{{ path('user-edit', { 'stream': user.stream }) }}" class="btn btn-outline-warning btn-sm">
+                                    <a href="{{ path('user-edit', { 'id': user.id }) }}" class="btn btn-outline-warning btn-sm">
                                         <i class="fa fa-edit"></i> Edit
                                     </a>
-                                    <a href="{{ path('user-stream', { 'stream': user.stream }) }}" class="btn btn-outline-dark btn-sm">
+                                    <a href="{{ path('user-stream', { 'id': user.id }) }}" class="btn btn-outline-dark btn-sm">
                                         <i class="fa fa-stream"></i> Stream
                                     </a>
                                 </td>

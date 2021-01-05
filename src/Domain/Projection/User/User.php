@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Context\User\Event;
+namespace App\Domain\Projection\User;
 
-use App\Domain\Projection\User\UserIdentifier;
-use Neos\EventSourcing\Event\DomainEventInterface;
+use Doctrine\ORM\Mapping as ORM;
 
-class UserWasUpdated implements DomainEventInterface
+class User
 {
     /**
      * @var string
@@ -24,17 +23,20 @@ class UserWasUpdated implements DomainEventInterface
      */
     private $mail;
 
-    public function __construct(
-        UserIdentifier $id,
+    public static function create(
+        string $id,
         string $name,
         string $mail
-    ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->mail = $mail;
+    ): self
+    {
+        $newUser = new self();
+        $newUser->id = $id;
+        $newUser->name = $name;
+        $newUser->mail = $mail;
+        return $newUser;
     }
 
-    public function getId(): UserIdentifier
+    public function getId(): string
     {
         return $this->id;
     }
