@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "24da339d0fc962c9d8c1297427dee7eb",
+    "content-hash": "c08d7ec046d4e2b1d6f07bb39dee7729",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -1457,13 +1457,13 @@
             "version": "dev-standalone-usage",
             "source": {
                 "type": "git",
-                "url": "https://github.com/skurfuerst/Neos.EventSourcing.git",
-                "reference": "001f26568087e72dbd1f261d585ccd664f584a8f"
+                "url": "https://github.com/Inchie/Neos.EventSourcing.git",
+                "reference": "0a399854e030ca75379712d275b37385c4d5c2da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/skurfuerst/Neos.EventSourcing/zipball/001f26568087e72dbd1f261d585ccd664f584a8f",
-                "reference": "001f26568087e72dbd1f261d585ccd664f584a8f",
+                "url": "https://api.github.com/repos/Inchie/Neos.EventSourcing/zipball/0a399854e030ca75379712d275b37385c4d5c2da",
+                "reference": "0a399854e030ca75379712d275b37385c4d5c2da",
                 "shasum": ""
             },
             "require": {
@@ -1477,9 +1477,6 @@
             "require-dev": {
                 "dg/bypass-finals": "^1.2",
                 "roave/security-advisories": "dev-master"
-            },
-            "suggest": {
-                "flowpack/jobqueue-common": "Needed for Neos/Flow usage only"
             },
             "type": "neos-package",
             "extra": {
@@ -1502,9 +1499,9 @@
             ],
             "description": "Lean and opinionated way to integrate Event Sourcing and CQRS pattern in your Flow framework package",
             "support": {
-                "source": "https://github.com/skurfuerst/Neos.EventSourcing/tree/standalone-usage"
+                "source": "https://github.com/Inchie/Neos.EventSourcing/tree/standalone-usage"
             },
-            "time": "2020-12-29T14:45:35+00:00"
+            "time": "2021-01-06T14:44:17+00:00"
         },
         {
             "name": "neos/event-sourcing-symfony-bridge",
@@ -1512,12 +1509,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:Inchie/Neos.EventSourcingSymfonyBridge.git",
-                "reference": "14361d9d96ad0e9dd1e6448527dd04ffdec973f8"
+                "reference": "ab02a23e4def0024c2644a62ee4fb34c450b1d1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Inchie/Neos.EventSourcingSymfonyBridge/zipball/14361d9d96ad0e9dd1e6448527dd04ffdec973f8",
-                "reference": "14361d9d96ad0e9dd1e6448527dd04ffdec973f8",
+                "url": "https://api.github.com/repos/Inchie/Neos.EventSourcingSymfonyBridge/zipball/ab02a23e4def0024c2644a62ee4fb34c450b1d1c",
+                "reference": "ab02a23e4def0024c2644a62ee4fb34c450b1d1c",
                 "shasum": ""
             },
             "require": {
@@ -1560,7 +1557,7 @@
                 "source": "https://github.com/Inchie/Neos.EventSourcingSymfonyBridge/tree/main",
                 "issues": "https://github.com/Inchie/Neos.EventSourcingSymfonyBridge/issues"
             },
-            "time": "2021-01-06T10:37:38+00:00"
+            "time": "2021-01-06T15:07:01+00:00"
         },
         {
             "name": "neos/utility-objecthandling",
