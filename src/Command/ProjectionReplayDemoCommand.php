@@ -29,6 +29,12 @@ class ProjectionReplayDemoCommand extends Command
         parent::__construct();
     }
 
+    protected function configure()
+    {
+        $this
+            ->setDescription('Replay all projections of the demo.');
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->replayListener(

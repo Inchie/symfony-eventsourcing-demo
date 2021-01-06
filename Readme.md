@@ -218,6 +218,15 @@ $this->eventListener->$listenerMethodName($event, $rawEvent);
 
 <b>Note:</b> The listener has to implement the `EventSubscriberInterface` 
 and `ProjectorInterface`. Otherwise it will not work properly.
+
+#### Replay projections
+
+With the following command you can rebuild all the projections. 
+
+```php
+bin/console eventsourcing:projection-replay-demo
+```
+
 ### Trouble
 
 Perhaps you have to change the file permissions
