@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\Commenting\Event;
 
+use App\Domain\Projection\Blog\BlogIdentifier;
 use App\Domain\Projection\Comment\CommentIdentifier;
-use App\Domain\ValueObject\BlogIdentifier;
-use App\Domain\ValueObject\UserIdentifier;
+use App\Domain\Projection\User\UserIdentifier;
 use Neos\EventSourcing\Event\DomainEventInterface;
 
 class CommentWasCreated implements DomainEventInterface

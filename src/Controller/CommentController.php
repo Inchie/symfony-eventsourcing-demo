@@ -6,10 +6,9 @@ namespace App\Controller;
 
 use App\Domain\Context\Commenting\Command\CreateComment;
 use App\Domain\Context\Commenting\CommentingCommandHandler;
-use App\Domain\Projection\Blog\Repository\BlogRepository;
+use App\Domain\Projection\Blog\BlogIdentifier;
 use App\Domain\Projection\Comment\Repository\CommentRepository;
-use App\Domain\ValueObject\BlogIdentifier;
-use App\Domain\ValueObject\UserIdentifier;
+use App\Domain\Projection\User\UserIdentifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
