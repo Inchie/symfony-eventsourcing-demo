@@ -1509,12 +1509,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:Inchie/Neos.EventSourcingSymfonyBridge.git",
-                "reference": "ab02a23e4def0024c2644a62ee4fb34c450b1d1c"
+                "reference": "ae0b0668254b3b4c37e3a64f2123af77f94bac08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Inchie/Neos.EventSourcingSymfonyBridge/zipball/ab02a23e4def0024c2644a62ee4fb34c450b1d1c",
-                "reference": "ab02a23e4def0024c2644a62ee4fb34c450b1d1c",
+                "url": "https://api.github.com/repos/Inchie/Neos.EventSourcingSymfonyBridge/zipball/ae0b0668254b3b4c37e3a64f2123af77f94bac08",
+                "reference": "ae0b0668254b3b4c37e3a64f2123af77f94bac08",
                 "shasum": ""
             },
             "require": {
@@ -1557,7 +1557,7 @@
                 "source": "https://github.com/Inchie/Neos.EventSourcingSymfonyBridge/tree/main",
                 "issues": "https://github.com/Inchie/Neos.EventSourcingSymfonyBridge/issues"
             },
-            "time": "2021-01-06T15:07:01+00:00"
+            "time": "2021-01-06T15:51:15+00:00"
         },
         {
             "name": "neos/utility-objecthandling",
