@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Domain\Context\Blogging;
+namespace App\Tests\Infrastructure\Domain\Context\Blogging;
 
+use App\Domain\Context\Blog\Command\UpdateBlog;
 use App\Domain\Context\Blogging\BloggingCommandHandler;
 use App\Domain\Context\Blogging\Command\CreateBlog;
+use App\Domain\Projection\Blog\BlogIdentifier;
 use App\Domain\Projection\User\UserIdentifier;
 use Doctrine\ORM\EntityManager;
+use Neos\EventSourcing\EventStore\EventStream;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class BloggingCommandHandlerTest extends KernelTestCase
@@ -38,7 +41,7 @@ class BloggingCommandHandlerTest extends KernelTestCase
     /**
      * @test
      */
-    public function handleCreateBlogReturnsTheExpectedResult()
+    public function handleCreateBlogCreatesTheBlog()
     {
         // given a create blog command
         $command = new CreateBlog(
@@ -62,7 +65,7 @@ class BloggingCommandHandlerTest extends KernelTestCase
             ->query($query)
             ->fetch();
 
-        // then the given name is returned
+        // then the blog reflection is created too
         $this->assertEquals(
             1,
             $result['NumberOfBlogs']
@@ -74,10 +77,101 @@ class BloggingCommandHandlerTest extends KernelTestCase
         );
     }
 
+    /**
+     * @test
+     */
+    public function handleUpdateBlogUpdatesTheBlog()
+    {
+        // given a update blog command
+        $command = new UpdateBlog(
+            BlogIdentifier::fromString($this->findBlogId()),
+            'Minecraft 16.2'
+        );
+
+        // when the update event is stored
+        $this->bloggingCommandHandler->handleUpdateBlog($command);
+
+        $query = "
+            SELECT 
+              name
+            FROM blog
+        ";
+
+        $result = $this->entityManager
+            ->getConnection()
+            ->query($query)
+            ->fetch();
+
+        // then the blog reflection is updated too
+        $this->assertEquals(
+            'Minecraft 16.2',
+            $result['name']
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function handleStreamReturnsTheStream()
+    {
+        // given a event stream
+        $blogIdentifier = BlogIdentifier::fromString($this->findBlogId());
+        $stream = $this->bloggingCommandHandler->handleStream($blogIdentifier);
+        /* @var $stream EventStream */
+
+        // when we use the current stream
+        $createEvent = $stream->current();
+        $createEventPayload = $createEvent->getRawEvent()->getPayload();
+
+        // then the payload is as expected
+        $this->assertEquals(
+            'Minecraft',
+            $createEventPayload['name']
+        );
+
+        $this->assertEquals(
+            'Mr. Author',
+            $createEventPayload['author']
+        );
+
+        // when we use the next stream
+        $stream->next();
+
+        $updateEvent = $stream->current();
+        $updateEventPayload = $updateEvent->getRawEvent()->getPayload();
+
+        // then the payload is also as expected
+        $this->assertEquals(
+            'Minecraft 16.2',
+            $updateEventPayload['name']
+        );
+
+        $this->truncateDatabase();
+    }
+
+    private function findBlogId()
+    {
+        $query = "
+            SELECT 
+              id
+            FROM blog
+        ";
+
+        $result = $this->entityManager
+            ->getConnection()
+            ->query($query)
+            ->fetch();
+
+        return $result['id'];
+    }
+
     public function tearDown(): void
     {
         parent::tearDown();
+    }
 
+    public function truncateDatabase()
+    {
         $query = "
             Truncate table blog;
             Truncate table blog_events;

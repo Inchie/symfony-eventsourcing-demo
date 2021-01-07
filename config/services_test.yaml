@@ -14,3 +14,5 @@ services:
     App\Domain\Context\Blogging\BloggingCommandHandler:
         public: true
 
+    App\Domain\Projection\Blog\Infrastructure\DoctrineBlogRepository:
+        public: true

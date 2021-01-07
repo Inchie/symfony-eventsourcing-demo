@@ -18,6 +18,7 @@
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>tests</directory>
+            <directory>vendor/neos/event-sourcing-symfony-bridge/tests</directory>
         </testsuite>
     </testsuites>
 

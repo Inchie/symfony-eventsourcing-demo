@@ -10,7 +10,6 @@ use App\Domain\Projection\Blog\Blog;
 use App\Domain\Projection\Blog\BlogIdentifier;
 use App\Domain\Projection\Blog\Repository\BlogRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PDO;
 use Ramsey\Uuid\Uuid;
 
 class DoctrineBlogRepository implements BlogRepository
