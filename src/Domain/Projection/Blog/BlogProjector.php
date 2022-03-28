@@ -7,17 +7,29 @@ namespace App\Domain\Projection\Blog;
 use App\Domain\Context\Blog\Event\BlogWasUpdated;
 use App\Domain\Context\Blogging\Event\BlogWasCreated;
 use App\Domain\Projection\Blog\Repository\BlogRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Neos\EventSourcing\EventListener\AppliedEventsStorage\AppliedEventsStorageInterface;
+use Neos\EventSourcing\EventListener\AppliedEventsStorage\DoctrineAppliedEventsStorage;
 use Neos\EventSourcing\EventStore\RawEvent;
 use Neos\EventSourcing\Projection\ProjectorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class BlogProjector implements ProjectorInterface, EventSubscriberInterface
+class BlogProjector implements ProjectorInterface, EventSubscriberInterface, AppliedEventsStorageInterface
 {
-    private $blogRepository;
+    private BlogRepository $blogRepository;
+    private DoctrineAppliedEventsStorage $doctrineAppliedEventsStorage;
 
-    public function __construct(BlogRepository $blogRepository)
+    public function __construct(
+        BlogRepository $blogRepository,
+        EntityManagerInterface $entityManager
+    )
     {
         $this->blogRepository = $blogRepository;
+
+        $this->doctrineAppliedEventsStorage = new DoctrineAppliedEventsStorage(
+            $entityManager->getConnection(),
+            get_class($this)
+        );
     }
 
     public static function getSubscribedEvents()
@@ -45,5 +57,22 @@ class BlogProjector implements ProjectorInterface, EventSubscriberInterface
     public function reset(): void
     {
         $this->blogRepository->truncate();
+    }
+
+    public function reserveHighestAppliedEventSequenceNumber(): int
+    {
+        return $this->doctrineAppliedEventsStorage->reserveHighestAppliedEventSequenceNumber();
+    }
+
+    public function releaseHighestAppliedSequenceNumber(): void
+    {
+        $this->doctrineAppliedEventsStorage->releaseHighestAppliedSequenceNumber();
+    }
+
+    public function saveHighestAppliedSequenceNumber(int $sequenceNumber): void
+    {
+        $this->doctrineAppliedEventsStorage->saveHighestAppliedSequenceNumber($sequenceNumber);
+
+        // Special things happens here
     }
 }

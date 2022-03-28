@@ -16,10 +16,6 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/Inchie/Neos.EventSourcing.git"
-        },
-        {
-            "type": "vcs",
             "url": "https://github.com/Inchie/Neos.EventSourcingSymfonyBridge"
         }
     ],

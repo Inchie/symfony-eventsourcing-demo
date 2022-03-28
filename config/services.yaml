@@ -46,3 +46,5 @@ services:
     App\Domain\Projection\Blog\Repository\BlogRepository: '@App\Domain\Projection\Blog\Infrastructure\DoctrineBlogRepository'
     App\Domain\Projection\Comment\Repository\CommentRepository: '@App\Domain\Projection\Comment\Infrastructure\DoctrineCommentRepository'
     App\Domain\Projection\User\Repository\UserRepository: '@App\Domain\Projection\User\Infrastructure\DoctrineUserRepository'
+
+    Neos\EventSourcing\SymfonyBridge\Transport\AsyncTransportInterface: '@Neos\EventSourcing\SymfonyBridge\Transport\MessengerTransport'
