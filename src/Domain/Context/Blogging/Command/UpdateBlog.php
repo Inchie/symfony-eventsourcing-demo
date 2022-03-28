@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Context\Blog\Command;
+namespace App\Domain\Context\Blogging\Command;
 
 use App\Domain\Projection\Blog\BlogIdentifier;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Context\Blog\Event;
+namespace App\Domain\Context\Blogging\Event;
 
 use App\Domain\Projection\Blog\BlogIdentifier;
 use Neos\EventSourcing\Event\DomainEventInterface;
