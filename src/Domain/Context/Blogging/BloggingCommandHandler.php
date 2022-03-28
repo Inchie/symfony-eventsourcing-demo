@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\Blogging;
 
-use App\Domain\Context\Blog\Command\UpdateBlog;
-use App\Domain\Context\Blog\Event\BlogWasUpdated;
 use App\Domain\Context\Blogging\Command\CreateBlog;
+use App\Domain\Context\Blogging\Command\UpdateBlog;
 use App\Domain\Context\Blogging\Event\BlogWasCreated;
+use App\Domain\Context\Blogging\Event\BlogWasUpdated;
 use App\Domain\Context\Blogging\Store\BloggingEventStore;
 use App\Domain\Helper\StreamNameHelper;
 use App\Domain\Projection\Blog\BlogIdentifier;

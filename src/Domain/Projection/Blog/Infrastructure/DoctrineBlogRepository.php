@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Projection\Blog\Infrastructure;
 
-use App\Domain\Context\Blog\Event\BlogWasUpdated;
 use App\Domain\Context\Blogging\Event\BlogWasCreated;
+use App\Domain\Context\Blogging\Event\BlogWasUpdated;
 use App\Domain\Projection\Blog\Blog;
 use App\Domain\Projection\Blog\BlogIdentifier;
 use App\Domain\Projection\Blog\Repository\BlogRepository;

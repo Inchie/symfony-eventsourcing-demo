@@ -11,4 +11,4 @@ framework:
 
         routing:
             # Route your messages to the transports
-            'Neos\EventSourcing\SymfonyBridge\Messenger\Handler\EventSourcingMessageHandler': async
+            'Neos\EventSourcing\SymfonyBridge\EventPublisher\Transport\Messenger\Dto\EventSourcingMessage': async

@@ -25,7 +25,7 @@ final class CommentIdentifier implements \JsonSerializable
         return new self($id);
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->id;
     }

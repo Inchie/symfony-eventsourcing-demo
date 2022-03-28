@@ -2,7 +2,5 @@ neos_eventsourcing:
   stores:
     blog:
       eventTableName: blog_events
-      listenerClassNames: []
     user:
       eventTableName: user_events
-      listenerClassNames: []

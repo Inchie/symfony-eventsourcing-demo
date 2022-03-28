@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Projection\Blog;
 
-use App\Domain\Context\Blog\Event\BlogWasUpdated;
 use App\Domain\Context\Blogging\Event\BlogWasCreated;
+use App\Domain\Context\Blogging\Event\BlogWasUpdated;
 use App\Domain\Projection\Blog\Repository\BlogRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Neos\EventSourcing\EventListener\AppliedEventsStorage\AppliedEventsStorageInterface;

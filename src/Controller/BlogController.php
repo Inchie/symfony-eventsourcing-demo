@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Domain\Context\Blog\Command\UpdateBlog;
 use App\Domain\Context\Blogging\BloggingCommandHandler;
 use App\Domain\Context\Blogging\Command\CreateBlog;
+use App\Domain\Context\Blogging\Command\UpdateBlog;
 use App\Domain\Projection\Blog\BlogFinder;
 use App\Domain\Projection\Blog\BlogIdentifier;
 use App\Domain\Projection\Blog\Infrastructure\DoctrineBlogRepository;
