@@ -20,7 +20,7 @@ class UserProjector implements ProjectorInterface, EventSubscriberInterface
         $this->userRepository = $userRepository;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             // NOTE!!! You always have to use "when*" namings, as otherwise, the EventListenerInvoker

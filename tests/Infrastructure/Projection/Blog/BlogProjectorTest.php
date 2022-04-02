@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Infrastructure\Projection\Blog;
 
-use App\Domain\Context\Blog\Event\BlogWasUpdated;
+use App\Domain\Context\Blogging\Event\BlogWasUpdated;
 use App\Domain\Context\Blogging\Event\BlogWasCreated;
 use App\Domain\Projection\Blog\BlogIdentifier;
 use App\Domain\Projection\Blog\BlogProjector;
@@ -31,7 +31,7 @@ class BlogProjectorTest extends KernelTestCase
      */
     private $rawEvent;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

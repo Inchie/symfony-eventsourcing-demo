@@ -24,11 +24,11 @@
         "ext-iconv": "*",
         "composer/package-versions-deprecated": "^1.11",
         "doctrine/doctrine-bundle": "^2.2",
-        "doctrine/doctrine-migrations-bundle": "^3.0",
+        "doctrine/doctrine-migrations-bundle": "^3.1.1",
         "doctrine/orm": "^2.7",
         "neos/error-messages": "^7.3",
         "neos/event-sourcing": "dev-master",
-        "neos/event-sourcing-symfony-bridge": "dev-main",
+        "neos/event-sourcing-symfony-bridge": "dev-feature/fix-tests",
         "neos/utility-objecthandling": "^7.3",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/asset": "5.4.*",
@@ -44,16 +44,21 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^5.2",
+        "symfony/phpunit-bridge": "*",
         "squizlabs/php_codesniffer": "^3.5",
-        "slevomat/coding-standard": "^6.1"
+        "slevomat/coding-standard": "^6.1",
+        "phpunit/phpunit": "^9"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "psr-4": {

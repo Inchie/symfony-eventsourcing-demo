@@ -32,7 +32,7 @@ class BlogProjector implements ProjectorInterface, EventSubscriberInterface, App
         );
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             // NOTE!!! You always have to use "when*" namings, as otherwise, the EventListenerInvoker

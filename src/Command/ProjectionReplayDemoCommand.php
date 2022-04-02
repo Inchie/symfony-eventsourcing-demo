@@ -22,8 +22,7 @@ class ProjectionReplayDemoCommand extends Command
 
     public function __construct(
         KernelInterface $kernelInterface
-    )
-    {
+    ) {
         $this->projectDir = $kernelInterface->getProjectDir();
 
         parent::__construct();
@@ -35,7 +34,7 @@ class ProjectionReplayDemoCommand extends Command
             ->setDescription('Replay all projections of the demo.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->replayListener(
             BlogProjector::class,

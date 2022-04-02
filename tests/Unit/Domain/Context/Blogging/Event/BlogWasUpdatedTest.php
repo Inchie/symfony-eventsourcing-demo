@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Domain\Context\Blogging\Event;
 
-use App\Domain\Context\Blog\Event\BlogWasUpdated;
+use App\Domain\Context\Blogging\Event\BlogWasUpdated;
 use App\Domain\Projection\Blog\BlogIdentifier;
 use PHPUnit\Framework\TestCase;
 

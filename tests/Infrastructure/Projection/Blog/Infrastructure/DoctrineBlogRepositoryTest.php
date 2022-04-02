@@ -23,7 +23,7 @@ class DoctrineBlogRepositoryTest extends KernelTestCase
      */
     private $entityManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

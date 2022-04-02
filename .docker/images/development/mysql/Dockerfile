@@ -1,4 +1,4 @@
-FROM mysql:5.7
+FROM mysql:8.0
 MAINTAINER Timo Nussbaum <timo.nussbaum@gmx.de>
 
 #ADD conf.d /etc/mysql/conf.d

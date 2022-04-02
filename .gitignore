@@ -19,3 +19,7 @@
 /.docker/data/mysql/mysql-datadir/
 
 .idea
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###

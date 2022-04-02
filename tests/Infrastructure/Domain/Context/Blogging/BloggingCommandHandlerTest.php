@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Infrastructure\Domain\Context\Blogging;
 
-use App\Domain\Context\Blog\Command\UpdateBlog;
+use App\Domain\Context\Blogging\Command\UpdateBlog;
 use App\Domain\Context\Blogging\BloggingCommandHandler;
 use App\Domain\Context\Blogging\Command\CreateBlog;
 use App\Domain\Projection\Blog\BlogIdentifier;
@@ -18,21 +18,24 @@ class BloggingCommandHandlerTest extends KernelTestCase
     /**
      * @var BloggingCommandHandler
      */
-    private $bloggingCommandHandler;
+    private BloggingCommandHandler $bloggingCommandHandler;
 
     /**
      * @var EntityManager
      */
-    private $entityManager;
+    private EntityManager $entityManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $kernel = $this->bootKernel();
         $container = $kernel->getContainer();
 
-        $this->bloggingCommandHandler = $container->get(BloggingCommandHandler::class);
+        /** @var BloggingCommandHandler $bloggingCommandHandler */
+        $bloggingCommandHandler = $container->get(BloggingCommandHandler::class);
+        $this->bloggingCommandHandler = $bloggingCommandHandler;
+
         $this->entityManager = $kernel->getContainer()
             ->get('doctrine')
             ->getManager();
