@@ -8,13 +8,8 @@ use App\Domain\Projection\User\Repository\UserRepository;
 
 class UserFinder
 {
-    private $userRepository;
-
-    public function __construct(
-        UserRepository $userRepository
-    )
+    public function __construct(private readonly UserRepository $userRepository)
     {
-        $this->userRepository = $userRepository;
     }
 
     public function execute()

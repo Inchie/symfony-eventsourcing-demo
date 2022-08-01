@@ -4,27 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\Blogging\Event;
 
-use App\Domain\Projection\Blog\BlogIdentifier;
-use Neos\EventSourcing\Event\DomainEventInterface;
+use App\Domain\Context\Blogging\ValueObject\BlogIdentifier;
+use App\Infrastructure\EventSourcing\EventInterface;
 
-class BlogWasUpdated implements DomainEventInterface
+class BlogWasUpdated implements EventInterface
 {
-    /**
-     * @var BlogIdentifier
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $name;
-
     public function __construct(
-        BlogIdentifier $id,
-        string $name
+        private readonly BlogIdentifier $id,
+        private readonly string $name
     ) {
-        $this->id = $id;
-        $this->name = $name;
     }
 
     public function getId(): BlogIdentifier
@@ -35,5 +23,18 @@ class BlogWasUpdated implements DomainEventInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public static function fromArray(array $values): EventInterface
+    {
+        return new self(BlogIdentifier::fromString($values['blogIdentifier']), $values['name']);
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'blogIdentifier' => $this->id,
+            'name' => $this->name,
+        ];
     }
 }

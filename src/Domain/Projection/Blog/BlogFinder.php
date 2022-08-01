@@ -5,27 +5,19 @@ declare(strict_types=1);
 namespace App\Domain\Projection\Blog;
 
 use App\Domain\Projection\Blog\Repository\BlogRepository;
-use App\Domain\Projection\Comment\Repository\CommentRepository;
+use App\Domain\Projection\Blog\Repository\CommentRepository;
 
 class BlogFinder
 {
-    private $blogRepository;
-    private $commentRepository;
-
     public function __construct(
-        BlogRepository $blogRepository,
-        CommentRepository $commentRepository
-    )
-    {
-        $this->blogRepository = $blogRepository;
-        $this->commentRepository = $commentRepository;
+        private readonly BlogRepository $blogRepository,
+        private readonly CommentRepository $commentRepository
+    ) {
     }
 
-    public function execute(BlogIdentifier $blogIdentifier)
+    public function execute(\App\Domain\Context\Blogging\ValueObject\BlogIdentifier $blogIdentifier)
     {
-        $comments = $this->commentRepository->findByBlog(
-            $blogIdentifier
-        );
+        $comments = $this->commentRepository->findByBlog($blogIdentifier);
 
         $blog = $this->blogRepository->findById($blogIdentifier);
 

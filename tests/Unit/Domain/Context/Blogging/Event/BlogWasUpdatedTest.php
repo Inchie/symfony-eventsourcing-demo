@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Domain\Context\Blogging\Event;
 
 use App\Domain\Context\Blogging\Event\BlogWasUpdated;
-use App\Domain\Projection\Blog\BlogIdentifier;
+use App\Domain\Context\Blogging\ValueObject\BlogIdentifier;
 use PHPUnit\Framework\TestCase;
 
 class BlogWasUpdatedTest extends TestCase

@@ -6,8 +6,8 @@ namespace App\Domain\Projection\Blog\Repository;
 
 use App\Domain\Context\Blogging\Event\BlogWasCreated;
 use App\Domain\Context\Blogging\Event\BlogWasUpdated;
+use App\Domain\Context\Blogging\ValueObject\BlogIdentifier;
 use App\Domain\Projection\Blog\Blog;
-use App\Domain\Projection\Blog\BlogIdentifier;
 
 interface BlogRepository
 {

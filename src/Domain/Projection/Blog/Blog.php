@@ -6,32 +6,15 @@ namespace App\Domain\Projection\Blog;
 
 class Blog
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private ?string $id = null;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string
-     */
-    private $author;
+    private ?string $author = null;
 
-    /**
-     * @var \ArrayIterator
-     */
-    private $comments;
+    private ?\ArrayIterator $comments = null;
 
-    public static function create(
-        string $id,
-        string $name,
-        string $author,
-        \ArrayIterator $comments = null
-    )
+    public static function create(string $id, string $name, string $author, \ArrayIterator $comments = null): self
     {
         if ($comments === null) {
             $comments = new \ArrayIterator();
@@ -46,7 +29,9 @@ class Blog
         return $newBlog;
     }
 
-    /** naming because of Twig **/
+    /**
+     * naming because of Twig *
+     */
     public function addComments(\ArrayIterator $comments)
     {
         $this->comments = $comments;

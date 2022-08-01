@@ -27,15 +27,12 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller'
+    App\Application\Controller\:
+        resource: '../src/Application/Controller'
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-
-    App\Domain\Projection\Comment\CommentProjector:
-        public: true
 
     App\Domain\Projection\User\UserProjector:
         public: true
@@ -44,7 +41,7 @@ services:
         public: true
 
     App\Domain\Projection\Blog\Repository\BlogRepository: '@App\Domain\Projection\Blog\Infrastructure\DoctrineBlogRepository'
-    App\Domain\Projection\Comment\Repository\CommentRepository: '@App\Domain\Projection\Comment\Infrastructure\DoctrineCommentRepository'
+    App\Domain\Projection\Blog\Repository\CommentRepository: '@App\Domain\Projection\Blog\Infrastructure\DoctrineCommentRepository'
     App\Domain\Projection\User\Repository\UserRepository: '@App\Domain\Projection\User\Infrastructure\DoctrineUserRepository'
 
-    #Neos\EventSourcing\SymfonyBridge\Transport\AsyncTransportInterface: '@Neos\EventSourcing\SymfonyBridge\Transport\MessengerTransport'
+    App\Infrastructure\EventSourcing\Projection\ProjectionCatchUpTriggerInterface: '@App\Infrastructure\EventSourcing\Symfony\ProjectionCatchUpTrigger'

@@ -4,98 +4,49 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\User;
 
-use App\Domain\Context\Blogging\Store\BloggingEventStore;
 use App\Domain\Context\User\Command\CreateUser;
 use App\Domain\Context\User\Command\UpdateUser;
 use App\Domain\Context\User\Event\UserWasCreated;
 use App\Domain\Context\User\Event\UserWasUpdated;
-use App\Domain\Context\User\Store\UserEventStore;
-use App\Domain\Helper\StreamNameHelper;
-use App\Domain\Projection\User\Repository\UserRepository;
-use App\Domain\Projection\User\UserIdentifier;
-use Neos\EventSourcing\Event\DomainEvents;
-use Neos\EventSourcing\EventStore\EventStore;
-use Neos\EventSourcing\EventStore\StreamName;
+use App\Domain\Context\User\ValueObject\UserIdentifier;
+use App\Infrastructure\EventSourcing\AppEventStore;
+use App\Infrastructure\EventSourcing\CommandResult;
+use App\Infrastructure\EventSourcing\Events;
+use Neos\EventStore\Model\EventStream\EventStreamInterface;
 use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
 
 class UserCommandHandler
 {
-    /**
-     * @var EventStore
-     */
-    private $eventStore;
-
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
-
     public function __construct(
-        UserEventStore $eventStore,
-        UserRepository $userRepository
-    )
-    {
-        $this->eventStore = $eventStore->create();
-        $this->userRepository = $userRepository;
+        private readonly AppEventStore $eventStore
+    ) {
     }
 
-    /**
-     * @param CreateUser $command
-     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
-     */
-    public function handleCreateUser(
-        CreateUser $command
-    )
+    public function handleCreateUser(CreateUser $command): CommandResult
     {
-        $this->requireUserNotToExist(
-            $command->getName(),
-            $command->getMail()
-        );
+        $this->requireUserNotToExist($command->getName(), $command->getMail());
 
-        $uuid = $this->userRepository->nextIdentity();
-        $event = new UserWasCreated(
-            $uuid,
-            $command->getName(),
-            $command->getMail()
-        );
+        $userIdentifier = UserIdentifier::fromString(Uuid::uuid4()->toString());
+        $event = new UserWasCreated($userIdentifier, $command->getName(), $command->getMail());
 
-        $stream = StreamNameHelper::fromString(
-            UserEventStore::USER_STREAM_NAME,
-            $uuid
-        );
+        $commandResult = $this->eventStore->commit($userIdentifier, Events::with($event));
+        $commandResult->block();
 
-        $this->eventStore->commit($stream, DomainEvents::withSingleEvent(
-            $event
-        ));
+        return $commandResult;
     }
 
-    public function handleUpdateUser(UpdateUser $command)
+    public function handleUpdateUser(UpdateUser $command): CommandResult
     {
-        $event = new UserWasUpdated(
-            $command->getId(),
-            $command->getName(),
-            $command->getMail()
-        );
+        $event = new UserWasUpdated($command->getId(), $command->getName(), $command->getMail());
+        $commandResult = $this->eventStore->commit($command->getId(), Events::with($event));
+        $commandResult->block();
 
-        $stream = StreamNameHelper::fromString(
-            UserEventStore::USER_STREAM_NAME,
-            $command->getId()
-        );
-
-        $this->eventStore->commit($stream, DomainEvents::withSingleEvent(
-            $event
-        ));
+        return $commandResult;
     }
 
-    public function handleStream(UserIdentifier $userIdentifier)
+    public function handleStream(UserIdentifier $userIdentifier): EventStreamInterface
     {
-        $stream = StreamNameHelper::fromString(
-            UserEventStore::USER_STREAM_NAME,
-            $userIdentifier
-        );
-
-        return $this->eventStore->load($stream);
+        return $this->eventStore->load($userIdentifier);
     }
 
     private function requireUserNotToExist(string $name, string $mail)

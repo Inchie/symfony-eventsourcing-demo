@@ -7,23 +7,32 @@ namespace App\Tests\Infrastructure\Domain\Context\Blogging;
 use App\Domain\Context\Blogging\Command\UpdateBlog;
 use App\Domain\Context\Blogging\BloggingCommandHandler;
 use App\Domain\Context\Blogging\Command\CreateBlog;
-use App\Domain\Projection\Blog\BlogIdentifier;
-use App\Domain\Projection\User\UserIdentifier;
+use App\Domain\Context\Blogging\ValueObject\BlogIdentifier;
+use App\Domain\Context\User\ValueObject\UserIdentifier;
+use App\Infrastructure\EventSourcing\EventWithMetadata;
 use Doctrine\ORM\EntityManager;
-use Neos\EventSourcing\EventStore\EventStream;
+use Neos\EventStore\Model\EventStream\EventStreamInterface;
+use ReflectionMethod;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Messenger\Bridge\Doctrine\Transport\DoctrineReceiver;
+use Symfony\Component\Messenger\Bridge\Doctrine\Transport\DoctrineTransport;
+use Symfony\Component\Messenger\EventListener\StopWorkerOnMessageLimitListener;
+use Symfony\Component\Messenger\MessageBus;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Transport\Serialization\Serializer;
+use Symfony\Component\Messenger\Worker;
+use Psr\Log\LoggerInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Messenger\Bridge\Doctrine\Transport\Connection;
 
 class BloggingCommandHandlerTest extends KernelTestCase
 {
-    /**
-     * @var BloggingCommandHandler
-     */
-    private BloggingCommandHandler $bloggingCommandHandler;
 
-    /**
-     * @var EntityManager
-     */
+    private BloggingCommandHandler $bloggingCommandHandler;
     private EntityManager $entityManager;
+    private EventDispatcherInterface $eventDispatcher;
+    private MessageBusInterface $messageBus;
+    private LoggerInterface $logger;
 
     public function setUp(): void
     {
@@ -35,6 +44,19 @@ class BloggingCommandHandlerTest extends KernelTestCase
         /** @var BloggingCommandHandler $bloggingCommandHandler */
         $bloggingCommandHandler = $container->get(BloggingCommandHandler::class);
         $this->bloggingCommandHandler = $bloggingCommandHandler;
+
+        $messageBus = $container->get('messenger.default_bus');
+        assert($messageBus instanceof MessageBusInterface);
+        $this->messageBus = $messageBus;
+
+        $logger = $container->get('monolog');
+        assert($logger instanceof LoggerInterface);
+        $this->logger = $logger;
+
+        $eventDispatcher = $container->get(EventDispatcherInterface::class);
+        $eventDispatcher->addSubscriber(new StopWorkerOnMessageLimitListener(1, $logger));
+        /* @var EventDispatcherInterface $eventDispatcher */
+        $this->eventDispatcher = $eventDispatcher;
 
         $this->entityManager = $kernel->getContainer()
             ->get('doctrine')
@@ -55,6 +77,8 @@ class BloggingCommandHandlerTest extends KernelTestCase
         // when the event is stored
         $this->bloggingCommandHandler->handleCreateBlog($command);
 
+        $this->runWorker();
+
         $query = "
             SELECT 
               name,     
@@ -65,8 +89,8 @@ class BloggingCommandHandlerTest extends KernelTestCase
 
         $result = $this->entityManager
             ->getConnection()
-            ->query($query)
-            ->fetch();
+            ->executeQuery($query)
+            ->fetchAllAssociative();
 
         // then the blog reflection is created too
         $this->assertEquals(
@@ -81,7 +105,7 @@ class BloggingCommandHandlerTest extends KernelTestCase
     }
 
     /**
-     * @test
+     *
      */
     public function handleUpdateBlogUpdatesTheBlog()
     {
@@ -102,8 +126,8 @@ class BloggingCommandHandlerTest extends KernelTestCase
 
         $result = $this->entityManager
             ->getConnection()
-            ->query($query)
-            ->fetch();
+            ->executeQuery($query)
+            ->fetchAllAssociative();
 
         // then the blog reflection is updated too
         $this->assertEquals(
@@ -113,18 +137,22 @@ class BloggingCommandHandlerTest extends KernelTestCase
     }
 
     /**
-     * @test
+     *
      */
     public function handleStreamReturnsTheStream()
     {
         // given a event stream
         $blogIdentifier = BlogIdentifier::fromString($this->findBlogId());
         $stream = $this->bloggingCommandHandler->handleStream($blogIdentifier);
-        /* @var $stream EventStream */
+        /* @var $stream EventStreamInterface */
 
         // when we use the current stream
-        $createEvent = $stream->current();
-        $createEventPayload = $createEvent->getRawEvent()->getPayload();
+        $createEvent = $stream->getIterator()->current();
+        assert($createEvent instanceof EventWithMetadata);
+
+        var_dump($createEvent);
+        die();
+        #$createEventPayload = $createEvent->
 
         // then the payload is as expected
         $this->assertEquals(
@@ -181,5 +209,29 @@ class BloggingCommandHandlerTest extends KernelTestCase
             Truncate table neos_eventsourcing_eventlistener_appliedeventslog
         ";
         $this->entityManager->getConnection()->exec($query);
+    }
+
+    private function runWorker(): void
+    {
+        $this->doctrineTransport = new DoctrineTransport(
+            new Connection([], $this->entityManager->getConnection()),
+            new Serializer()
+        );
+
+        $receiver = $this->receiver();
+        $worker = new Worker(
+            [$receiver],
+            $this->messageBus,
+            $this->eventDispatcher,
+            $this->logger
+        );
+        $worker->run();
+    }
+
+    public function receiver(): DoctrineReceiver
+    {
+        $method = new ReflectionMethod(DoctrineTransport::class, "getReceiver");
+        $method->setAccessible(true);
+        return $method->invoke($this->doctrineTransport);
     }
 }

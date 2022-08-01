@@ -5,72 +5,58 @@ declare(strict_types=1);
 namespace App\Domain\Context\Blogging;
 
 use App\Domain\Context\Blogging\Command\CreateBlog;
+use App\Domain\Context\Blogging\Command\CreateComment;
 use App\Domain\Context\Blogging\Command\UpdateBlog;
 use App\Domain\Context\Blogging\Event\BlogWasCreated;
 use App\Domain\Context\Blogging\Event\BlogWasUpdated;
-use App\Domain\Context\Blogging\Store\BloggingEventStore;
-use App\Domain\Helper\StreamNameHelper;
-use App\Domain\Projection\Blog\BlogIdentifier;
-use App\Domain\Projection\Blog\Repository\BlogRepository;
-use Neos\EventSourcing\Event\DomainEvents;
+use App\Domain\Context\Blogging\Event\CommentWasCreated;
+use App\Domain\Context\Blogging\ValueObject\BlogIdentifier;
+use App\Infrastructure\EventSourcing\AppEventStore;
+use App\Infrastructure\EventSourcing\CommandResult;
+use App\Infrastructure\EventSourcing\Events;
+use Neos\EventStore\Model\EventStream\EventStreamInterface;
+use Ramsey\Uuid\Uuid;
 
 class BloggingCommandHandler
 {
-    private $eventStore;
-    private $blogRepository;
-
     public function __construct(
-        BloggingEventStore $eventStore,
-        BlogRepository $blogRepository
-    )
-    {
-        $this->eventStore = $eventStore->create();
-        $this->blogRepository = $blogRepository;
+        private readonly AppEventStore $eventStore
+    ) {
     }
 
-    public function handleCreateBlog(CreateBlog $command)
+    public function handleCreateBlog(CreateBlog $command): CommandResult
     {
-        $uuid = $this->blogRepository->nextIdentity();
-        $event = new BlogWasCreated(
-            $uuid,
-            $command->getName(),
-            $command->getAuthorIdentifier()
-        );
+        $blogIdentifier = BlogIdentifier::fromString(Uuid::uuid4()->toString());
+        $event = new BlogWasCreated($blogIdentifier, $command->getName(), $command->getAuthorIdentifier());
 
-        $stream = StreamNameHelper::fromString(
-            BloggingEventStore::BLOG_STREAM_NAME,
-            $uuid
-        );
+        $commandResult = $this->eventStore->commit($blogIdentifier, Events::with($event));
+        $commandResult->block();
 
-        $this->eventStore->commit($stream, DomainEvents::withSingleEvent(
-            $event
-        ));
+        return $commandResult;
     }
 
-    public function handleUpdateBlog(UpdateBlog $command)
+    public function handleUpdateBlog(UpdateBlog $command): CommandResult
     {
-        $event = new BlogWasUpdated(
-            $command->getId(),
-            $command->getName()
-        );
+        $event = new BlogWasUpdated($command->getId(), $command->getName());
 
-        $stream = StreamNameHelper::fromString(
-            BloggingEventStore::BLOG_STREAM_NAME,
-            $command->getId()
-        );
+        $commandResult = $this->eventStore->commit($command->getId(), Events::with($event));
+        $commandResult->block();
 
-        $this->eventStore->commit($stream, DomainEvents::withSingleEvent(
-            $event
-        ));
+        return $commandResult;
     }
 
-    public function handleStream(BlogIdentifier $blogIdentifier)
+    public function handleCreateComment(CreateComment $command): CommandResult
     {
-        $stream = StreamNameHelper::fromString(
-            BloggingEventStore::BLOG_STREAM_NAME,
-            $blogIdentifier
+        $event = new CommentWasCreated(
+            $command->getBlogIdentifier(),
+            $command->getAuthorIdentifier(),
+            $command->getComment()
         );
+        return $this->eventStore->commit($command->getBlogIdentifier(), Events::with($event));
+    }
 
-        return $this->eventStore->load($stream);
+    public function handleStream(BlogIdentifier $blogIdentifier): EventStreamInterface
+    {
+        return $this->eventStore->load($blogIdentifier);
     }
 }

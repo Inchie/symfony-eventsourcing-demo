@@ -4,36 +4,17 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\Blogging\Event;
 
-use App\Domain\Projection\Blog\BlogIdentifier;
-use App\Domain\Projection\User\UserIdentifier;
-use Neos\EventSourcing\Event\DomainEventInterface;
+use App\Domain\Context\Blogging\ValueObject\BlogIdentifier;
+use App\Domain\Context\User\ValueObject\UserIdentifier;
+use App\Infrastructure\EventSourcing\EventInterface;
 
-class BlogWasCreated implements DomainEventInterface
+class BlogWasCreated implements EventInterface
 {
-    /**
-     * @var BlogIdentifier
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var UserIdentifier
-     */
-    private $author;
-
     public function __construct(
-        BlogIdentifier $id,
-        string $name,
-        UserIdentifier $author
-    )
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->author = $author;
+        private readonly BlogIdentifier $id,
+        private readonly string $name,
+        private readonly UserIdentifier $author
+    ) {
     }
 
     public function getId(): BlogIdentifier
@@ -49,5 +30,23 @@ class BlogWasCreated implements DomainEventInterface
     public function getAuthor(): UserIdentifier
     {
         return $this->author;
+    }
+
+    public static function fromArray(array $values): EventInterface
+    {
+        return new self(
+            BlogIdentifier::fromString($values['blogIdentifier']),
+            $values['name'],
+            UserIdentifier::fromString($values['author'])
+        );
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'blogIdentifier' => $this->id,
+            'name' => $this->name,
+            'author' => $this->author,
+        ];
     }
 }

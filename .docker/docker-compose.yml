@@ -12,8 +12,8 @@ services:
     ports:
       - 80:80
     
-  mysql:    
-    build: './images/development/mysql'
+  mysql:
+    image: mysql:8.0
     container_name: eventsourcing-mysql
     volumes:
       - ./data/mysql/conf.d:/etc/mysql/conf.d
@@ -22,6 +22,8 @@ services:
     command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
     expose:
       - "3000"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -31,9 +33,7 @@ services:
     environment:
       PMA_HOST: mysql
       MYSQL_USERNAME: root
-      MYSQL_ROOT_PASSWORD: 'password'
-    volumes:
-      - /sessions
+      MYSQL_ROOT_PASSWORD: root
     ports:
       - 8080:80
 

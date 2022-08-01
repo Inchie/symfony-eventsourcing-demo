@@ -4,30 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Projection\User;
 
-use Doctrine\ORM\Mapping as ORM;
-
 class User
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private ?string $id = null;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string
-     */
-    private $mail;
+    private ?string $mail = null;
 
-    public static function create(
-        string $id,
-        string $name,
-        string $mail
-    ): self
+    public static function create(string $id, string $name, string $mail): self
     {
         $newUser = new self();
         $newUser->id = $id;

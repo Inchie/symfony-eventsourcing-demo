@@ -4,37 +4,21 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\Blogging\Command;
 
-use App\Domain\Projection\User\UserIdentifier;
+use App\Domain\Context\User\ValueObject\UserIdentifier;
 
 class CreateBlog
 {
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var UserIdentifier
-     */
-    private $authorIdentifier;
-
-    public function __construct(string $name, UserIdentifier $authorIdentifier)
-    {
-        $this->name = $name;
-        $this->authorIdentifier = $authorIdentifier;
+    public function __construct(
+        private readonly string $name,
+        private readonly UserIdentifier $authorIdentifier
+    ) {
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return UserIdentifier
-     */
     public function getAuthorIdentifier(): UserIdentifier
     {
         return $this->authorIdentifier;

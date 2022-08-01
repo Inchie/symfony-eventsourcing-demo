@@ -16,3 +16,4 @@ services:
 
     App\Domain\Projection\Blog\Infrastructure\DoctrineBlogRepository:
         public: true
+

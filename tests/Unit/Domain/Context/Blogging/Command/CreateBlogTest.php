@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Domain\Context\Blogging\Command;
 
 use App\Domain\Context\Blogging\Command\CreateBlog;
-use App\Domain\Projection\User\UserIdentifier;
+
+use App\Domain\Context\User\ValueObject\UserIdentifier;
 use PHPUnit\Framework\TestCase;
 
 class CreateBlogTest extends TestCase

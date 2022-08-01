@@ -4,34 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\User\Command;
 
-use App\Domain\Projection\User\UserIdentifier;
+use App\Domain\Context\User\ValueObject\UserIdentifier;
 
 class UpdateUser
 {
-    /**
-     * @var UserIdentifier
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $mail;
-
     public function __construct(
-        UserIdentifier $id,
-        string $name,
-        string $mail
-    )
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->mail = $mail;
+        private readonly UserIdentifier $id,
+        private readonly string $name,
+        private readonly string $mail
+    ) {
     }
 
     public function getId(): UserIdentifier

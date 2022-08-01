@@ -44,10 +44,10 @@
                                 {% for event in stream %}
                                     <tr>
                                         <td>
-                                            {{ event.rawEvent.recordedAt|date("d-m-Y") }}
+                                            {{ event.recordedAt|date("d-m-Y") }}
                                         </td>
                                         <td>
-                                            {{ event.rawEvent.type|e }}
+                                            {{ event.event.type.value|e }}
                                         </td>
                                     </tr>
                                 {% endfor %}

@@ -6,18 +6,16 @@ namespace App\Tests\Infrastructure\Projection\Blog;
 
 use App\Domain\Context\Blogging\Event\BlogWasUpdated;
 use App\Domain\Context\Blogging\Event\BlogWasCreated;
-use App\Domain\Projection\Blog\BlogIdentifier;
-use App\Domain\Projection\Blog\BlogProjector;
-use App\Domain\Projection\User\UserIdentifier;
+use App\Domain\Context\Blogging\ValueObject\BlogIdentifier;
+use App\Domain\Context\User\ValueObject\UserIdentifier;
+use App\Domain\Projection\Blog\BlogProjection;
 use Doctrine\ORM\EntityManager;
-use Neos\EventSourcing\EventStore\RawEvent;
-use Neos\EventSourcing\EventStore\StreamName;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class BlogProjectorTest extends KernelTestCase
 {
     /**
-     * @var BlogProjector
+     * @var BlogProjection
      */
     private $blogProjector;
 
@@ -38,7 +36,7 @@ class BlogProjectorTest extends KernelTestCase
         $kernel = $this->bootKernel();
         $container = $kernel->getContainer();
 
-        $this->blogProjector = $container->get(BlogProjector::class);
+        $this->blogProjector = $container->get(BlogProjection::class);
         $this->entityManager = $kernel->getContainer()
             ->get('doctrine')
             ->getManager();
@@ -60,7 +58,7 @@ class BlogProjectorTest extends KernelTestCase
      */
     public function getSubscribedEventsReturnsTheExpectedEvents()
     {
-        $subscribedEvents = BlogProjector::getSubscribedEvents();
+        $subscribedEvents = BlogProjection::getSubscribedEvents();
 
         $this->assertEquals(
             [

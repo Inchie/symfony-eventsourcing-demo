@@ -6,8 +6,8 @@ namespace App\Domain\Projection\User\Repository;
 
 use App\Domain\Context\User\Event\UserWasCreated;
 use App\Domain\Context\User\Event\UserWasUpdated;
+use App\Domain\Context\User\ValueObject\UserIdentifier;
 use App\Domain\Projection\User\User;
-use App\Domain\Projection\User\UserIdentifier;
 
 interface UserRepository
 {

@@ -4,34 +4,16 @@ declare(strict_types=1);
 
 namespace App\Domain\Context\User\Event;
 
-use App\Domain\Projection\User\UserIdentifier;
-use Neos\EventSourcing\Event\DomainEventInterface;
+use App\Domain\Context\User\ValueObject\UserIdentifier;
+use App\Infrastructure\EventSourcing\EventInterface;
 
-class UserWasUpdated implements DomainEventInterface
+class UserWasUpdated implements EventInterface
 {
-    /**
-     * @var string
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $mail;
-
     public function __construct(
-        UserIdentifier $id,
-        string $name,
-        string $mail
+        private readonly UserIdentifier $id,
+        private readonly string $name,
+        private readonly string $mail
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->mail = $mail;
     }
 
     public function getId(): UserIdentifier
@@ -47,5 +29,19 @@ class UserWasUpdated implements DomainEventInterface
     public function getMail(): string
     {
         return $this->mail;
+    }
+
+    public static function fromArray(array $values): EventInterface
+    {
+        return new self(UserIdentifier::fromString($values['userIdentifier']), $values['name'], $values['mail']);
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'userIdentifier' => $this->id,
+            'name' => $this->name,
+            'mail' => $this->mail,
+        ];
     }
 }
